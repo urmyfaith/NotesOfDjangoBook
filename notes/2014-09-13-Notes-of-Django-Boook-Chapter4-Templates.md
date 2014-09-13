@@ -109,6 +109,6 @@ print t.render(template.Context({'person_list':name_list}))
 
 '''
 >>> 
-li>CCC></li> <li>BBB></li> <li>AAA></li>
+<li>CCC></li> <li>BBB></li> <li>AAA></li>
 '''
 ```
