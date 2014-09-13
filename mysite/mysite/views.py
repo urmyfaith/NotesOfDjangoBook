@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.http import Http404,HttpResponse
 import datetime
 from django.shortcuts import render_to_response
 
