@@ -271,4 +271,26 @@ def current_datetime(request):
     html=t.render(Context({'current_date':now}))
     return HttpResponse(html)
 ```
-### 使用
+### 使用render_to_response简化代码:
+
+使用render_to_response简化代码来代替使用HttpResponse.
+```python
+from django.shortcuts import render_to_response
+def current_datetime(request):
+    now = datetime.datetime.now()
+    return render_to_response('current_datetime.html',{'current_date':now})
+    return HttpResponse(html)
+```
+
+注意,这里的导入包变化了很多:
+不需要
+
+```python
+from django.http import HttpResponse
+from django.template.loader import get_template
+from django.template import Context
+```
+取而代之的是:
+```python
+from django.shortcuts import render_to_response
+```
