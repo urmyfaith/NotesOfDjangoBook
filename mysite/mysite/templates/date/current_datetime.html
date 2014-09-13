@@ -1,1 +1,7 @@
-<html><body>It is now {{ current_date }}.</body></html>
+{% extends "base.html" %}
+
+{% block title %}The current time{% endblock %}
+
+{% block content %}
+<p>It is now {{ current_date }}.</p>
+{% endblock %}

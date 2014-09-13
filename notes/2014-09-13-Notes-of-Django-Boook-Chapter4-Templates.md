@@ -312,4 +312,55 @@ return render_to_response('date/current_datetime.html',{'current_date':now})
 
 ```
 
+## 模版继承
+
+包含的方法:
+
+include的方法:
+```python
+{% include 'nav.html' %}
+{% include "nav.html" %}
+{% include 'includes/nav.html' %}
+{% include template_name %}   #变量名template_name
+```
+
+> **模版继承**是先分块,然后extends(继承),覆盖/重写的方法.
+
+将页面分成多个块的方法:
+
+```python
+# base.html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <h1>My helpful timestamp site</h1>
+    {% block content %}{% endblock %}
+    {% block footer %}
+    <hr>
+    <p>Thanks for visiting my site.</p>
+    {% endblock %}
+</body>
+</html>
+```
+
+> * 标题块
+> * 内容块
+> * 底部块
+
+使用继承的方法,NotesOfDjangoBook\mysite\mysite\templates\base.html,可以重写为:
+```python
+{% extends "base.html" %}
+
+{% block title %}The current time{% endblock %}
+
+{% block content %}
+<p>It is now {{ current_date }}.</p>
+{% endblock %}
+```
+
+> **{% extends %} 的参数应该是字符串，但是如果直到运行时方能确定父模板名，这个参数也可以是个变量。这使得你能够实现一些很酷的动态功能。**
 
