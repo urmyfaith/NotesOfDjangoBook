@@ -170,14 +170,9 @@ print t.render(c)
         |
     {% endif %}
 {% endfor %}
-
 ```
-----
-
 
 ##  模版里的注释:
-
-
 * 单行注释:
     {# This is a comment #}
 * 多行注释:
@@ -190,3 +185,6 @@ multi-line comment.
 {% endcomment %}
 
 ```
+
+## 模版中变量的过滤器
+
