@@ -60,4 +60,4 @@ Publisher.objects.order_by('name')[0:2]    #三条记录
 
 -----
 
-![db-design.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/NotesOfDjangoBook/notes/images/db-design.png "db-design.png")
+![db-design.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/db-design.png "db-design.png")
