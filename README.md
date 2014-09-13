@@ -13,7 +13,12 @@ https://docs.djangoproject.com/en/1.7/intro/
 
 
 
-1.   [djangobook](http://djangobook.py3k.cn/2.0 "djangobook")
+1>.   [djangobook](http://djangobook.py3k.cn/2.0 "djangobook")
 
-2.  [djangobook-nowmagic](http://www.nowamagic.net/academy/part/13/286/)
+书中的失效的图片链接访问:
+http://www.djangobook.com/en/2.0/_images/XXXXXXXX.png
+例如:
+ [http://www.djangobook.com/en/2.0/_images/missing_template.png](http://www.djangobook.com/en/2.0/_images/missing_template.png)
+
+2>.  [djangobook-nowmagic](http://www.nowamagic.net/academy/part/13/286/)
 

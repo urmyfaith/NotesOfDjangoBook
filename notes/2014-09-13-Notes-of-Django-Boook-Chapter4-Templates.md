@@ -237,3 +237,38 @@ print t.render(c)
     {{ link|slice:"3" }}取出前三个字符(字符,中文字符)
 ```
 
+----
+
+## 使用templates目录
+
+### 使用HttpResponse
+
+修改settings,添加mysite
+
+```python
+INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'mysite'
+)
+```
+
+
+修改**view.py**
+```python
+from django.http import HttpResponse,Http404
+import datetime
+from django.template.loader import get_template
+from django.template import Context
+
+def current_datetime(request):
+    now = datetime.datetime.now()
+    t=get_template('current_datetime.html')
+    html=t.render(Context({'current_date':now}))
+    return HttpResponse(html)
+```
+### 使用
