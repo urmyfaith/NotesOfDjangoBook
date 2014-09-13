@@ -150,7 +150,7 @@ DemoAppPoll/templates/results.html
 ```
 
 > "choice.votes|pluralize"=s ,单词加复数的方法.
-![forms-show-results](https://raw.githubusercontent.com/urmyfaith/urmyfaith.github.io/master/Django/images/forms-show-results.gif)
+![forms-show-results](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/Django/images/forms-show-results.gif)
 
 ---
 ## 通用viw设计:越少代码越好?

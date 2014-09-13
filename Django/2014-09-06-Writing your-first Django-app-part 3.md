@@ -71,7 +71,7 @@ urlpatterns = patterns('',
 
 >    在DemoAppPoll.urls里,我们绑定了views.index来处理请求.
 
-![成功处理请求](https://raw.githubusercontent.com/urmyfaith/urmyfaith.github.io/master/Django/images/DemoAppPoll-first-app.png)
+![成功处理请求](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/Django/images/DemoAppPoll-first-app.png)
 
 -----
 
@@ -140,7 +140,7 @@ def vote(request, question_id):
     return HttpResponse("You're voting on question %s." % question_id)
 
 ```
-![路径匹配](https://raw.githubusercontent.com/urmyfaith/urmyfaith.github.io/master/Django/images/DemoAppPoll-url-view.png)
+![路径匹配](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/Django/images/DemoAppPoll-url-view.png)
 
 ---
 
@@ -165,7 +165,7 @@ url(r'^(?P<question_id>\d+)/$', views.detail, name='detail'),
 
 第三步:由view.detail(DemoAppPoll/views.py中detail函数)响应请求.
 
-![include()](https://raw.githubusercontent.com/urmyfaith/urmyfaith.github.io/master/Django/images/request-url.png)
+![include()](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/Django/images/request-url.png)
 
 ------
 
@@ -192,7 +192,7 @@ def index(request):
    
     return HttpResponse(output)
 ```
-![hard-coded-view](https://raw.githubusercontent.com/urmyfaith/urmyfaith.github.io/master/Django/images/hard-coded-view.png)
+![hard-coded-view](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/Django/images/hard-coded-view.png)
 
 有个问题是,这个**页面看起来是如此的简陋**,这时候,可以使**用template**来设计.
 
@@ -300,7 +300,7 @@ def index(request):
     return HttpResponse(template.render(context))
 ```
 
-![templates-view](https://raw.githubusercontent.com/urmyfaith/urmyfaith.github.io/master/Django/images/templates-view.png)
+![templates-view](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/Django/images/templates-view.png)
 
 ----
 ## 使用模版设计view的捷径:render()
@@ -378,7 +378,7 @@ b.需要创建模版文件:detail.html
   </div>
 
 ```
-![templates-except-404](https://raw.githubusercontent.com/urmyfaith/urmyfaith.github.io/master/Django/images/templates-except-404.png)
+![templates-except-404](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/Django/images/templates-except-404.png)
 
 ## 抛出异常404-快捷方法
 
