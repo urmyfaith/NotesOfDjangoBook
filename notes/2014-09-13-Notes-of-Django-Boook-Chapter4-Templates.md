@@ -312,4 +312,11 @@ return render_to_response('date/current_datetime.html',{'current_date':now})
 
 ```
 
-
+## 模版继承
+include的方法:
+```python
+{% include 'nav.html' %}
+{% include "nav.html" %}
+{% include 'includes/nav.html' %}
+{% include template_name %}   #变量名template_name
+```
