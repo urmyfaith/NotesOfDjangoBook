@@ -17,5 +17,3 @@ https://docs.djangoproject.com/en/1.7/intro/
 
 2.  [djangobook-nowmagic](http://www.nowamagic.net/academy/part/13/286/)
 
-
-*  
