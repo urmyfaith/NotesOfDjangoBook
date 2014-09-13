@@ -170,4 +170,23 @@ print t.render(c)
         |
     {% endif %}
 {% endfor %}
+
+```
+----
+
+
+##  模版里的注释:
+
+
+* 单行注释:
+    {# This is a comment #}
+* 多行注释:
+
+```python
+
+{% comment %}
+This is a
+multi-line comment.
+{% endcomment %}
+
 ```
