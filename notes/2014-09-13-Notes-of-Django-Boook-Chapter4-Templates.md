@@ -140,3 +140,34 @@ print t.render(c)
 
 ----
 
+## Templates里for里有forloop.count,forloop.first,forloop.last
+
+* forloop.count,循环计数器
+* forloop.first,第一次开始循环(布尔值)
+* forloop.last,最后一次循环.(布尔值)
+
+```python
+from django.conf import settings
+from django import template
+settings.configure()
+
+t=template.Template('''
+{% for link in links %} {{forloop.counter}}-->{{link}} {% if not forloop.last%}|{% endif %}{% endfor %}''')
+links=['LinkA','LinkB','LinkC','LinkD']
+c =template.Context({'links':links})
+print t.render(c)
+
+'''
+>>> 
+ 1-->LinkA | 2-->LinkB | 3-->LinkC | 4-->LinkD 
+'''
+```
+
+> ```python
+{% for link in links %}
+    {{link}} 
+    {% if not forloop.last%}
+        |
+    {% endif %}
+{% endfor %}
+```
