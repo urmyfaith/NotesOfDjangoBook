@@ -188,3 +188,52 @@ multi-line comment.
 
 ## 模版中变量的过滤器
 
+**过滤器的作用是,在输出变量值前,对变量进行一些预处理**
+
+* 比如字符串的截取
+
+* 比如大小写的转换
+
+* 比如时间格式的的转换.
+
+```python
+# -*- coding: utf-8 -*-
+from django.conf import settings
+from django import template
+settings.configure()
+
+t=template.Template('''
+{% for link in links %}
+    {{ link}}
+    {{ link|lower }}{# Upcase,Lowercase#}
+    {{ link|first|upper }}
+    {{ link|truncatewords:"3" }}
+    {{ link|slice:"3" }}
+{% endfor %}
+''')
+links=['linkA is a link .',u'我是中国人,我爱自己的祖国,你呢?是那国人?']
+c =template.Context({'links':links})
+print t.render(c)
+
+'''
+    linkA is a link .
+    linka is a link .
+    L
+    linkA is a ...
+    lin
+
+    我是中国人,我爱自己的祖国,你呢?是那国人?
+    我是中国人,我爱自己的祖国,你呢?是那国人?
+    我
+    我是中国人,我爱自己的祖国,你呢?是那国人?
+    我是中
+'''
+```
+>```python
+    {{ link}}  直接输出变量值
+    {{ link|lower }}{# Upcase,Lowercase#}英文字母的大小写转换
+    {{ link|first|upper }} 取出第一个字符,大写.
+    {{ link|truncatewords:"3" }}取出前三个单词
+    {{ link|slice:"3" }}取出前三个字符(字符,中文字符)
+```
+
