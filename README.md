@@ -8,7 +8,6 @@ NotesOfDjangoBook
 *    **Django** is the notes of learning 
 ```python
 https://docs.djangoproject.com/en/1.7/intro/
-
 ```
 *    **notes** is the notes of reading the online  books:
 
