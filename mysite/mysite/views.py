@@ -7,8 +7,7 @@ def hello(request):
 
 def current_datetime(request):
     now = datetime.datetime.now()
-    return render_to_response('current_datetime.html',{'current_date':now})
-    return HttpResponse(html)
+    return render_to_response('date/current_datetime.html',{'current_date':now})
 def hours_ahead(request, offset):
     try:
         offset = int(offset)

@@ -279,7 +279,7 @@ from django.shortcuts import render_to_response
 def current_datetime(request):
     now = datetime.datetime.now()
     return render_to_response('current_datetime.html',{'current_date':now})
-    return HttpResponse(html)
+    #return HttpResponse(html)
 ```
 
 注意,这里的导入包变化了很多:
@@ -294,3 +294,22 @@ from django.template import Context
 ```python
 from django.shortcuts import render_to_response
 ```
+
+## templates目录下,可以再创建目录来分离整理各个文件
+
+**NotesOfDjangoBook\mysite\mysite\templates\current_datetime.html**
+
+```python
+return render_to_response('current_datetime.html',{'current_date':now})
+```
+
+新建目录date,然后移入文件进入:
+
+**NotesOfDjangoBook\mysite\mysite\templates\date\current_datetime.html**
+
+```python
+return render_to_response('date/current_datetime.html',{'current_date':now})
+
+```
+
+
