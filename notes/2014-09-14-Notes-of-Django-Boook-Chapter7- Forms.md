@@ -217,3 +217,96 @@ def show_search_result(request):
 
 ---
 
+
+## 表单改进
+
+> 提交之后,如果是因为用户不小心提交了,提交为空字符串,那么就需要返回去重新填写.
+
+> 所以,在提交空搜索字的时候,直接返回到搜索页面即可.
+
+1>** views.py(show_search_result)**里修改显示逻辑:
+
+如果带参数,获得搜索参数.
+
+检查参数是否为空.
+
+如果非空,查询显示.
+如果为空,显示搜索页面,并标记搜索出现出错.
+
+```python
+def show_search_result(request):
+    if 'q' in request.GET:
+        #message = 'You searched for : %r' % request.GET['q']
+        #message = 'You searched for : %s' % request.GET['q']
+        search_str = request.GET['q']
+        if search_str!="":
+            books = Book.objects.filter(title__icontains=search_str)
+            return render_to_response('search_results.html',{
+            'books':books,
+            'search_str':search_str
+            })
+        #message = 'You submitted an empty form.'
+        #return HttpResponse(message)
+        return render_to_response('search_form.html', {'error': True})
+
+```
+
+2>修改模版显示逻辑:
+
+* search_form.html,检查是否有搜索错误标记,如果有,显示出错.
+
+* search_results.html.添加搜索的框,方便再次搜索.
+
+```python
+#search_form.html
+{% extends 'base.html' %}
+
+{% block title %}show search form {% endblock %}
+{% block content %}
+    {% if error %}
+        <p style="color: red;">Please submit a search term.</p>
+    {% endif %}
+	<form action="/search/" method="get">
+        <input type="text" name="q">
+        <input type="submit" value="Search">
+    </form>
+{% endblock %}
+```
+
+```python
+{% extends 'base.html' %}
+
+{% block title %}show search results  infomation{% endblock %}
+{% block content %}
+	<form action="/search/" method="get">
+        <input type="text" name="q">
+        <input type="submit" value="Search">
+    </form>
+
+<p>You searched for: <strong>{{ search_str }}</strong></p>
+{% if books %}
+    <p>Found {{ books|length }} book{{ books|pluralize }}.</p>
+	<table width="600" border="0" bgcolor="blue" bordercolor="black" cellpadding="5" cellspacing="1">
+		<tr bgcolor="white"  > 
+			<td>#</td>   
+			<td> title </td>
+			<td>book.publisher </td>
+			<td>publication_date </td>
+		</tr>
+        {% for book in books %}
+		<tr bgcolor="white" > 
+			<td>{{ forloop.counter }}</td>   
+			<td>{{ book.title }}</td>
+			<td>{{ book.publisher }}</td>
+			<td>{{ book.publication_date }}</td>
+		</tr>
+        {% endfor %}
+	</table>
+{% else %}
+    <p>No books matched your search criteria.</p>
+{% endif %}
+
+	
+{% endblock %}
+```
+![show_serach_result.gif](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/show_serach_result.gif)
