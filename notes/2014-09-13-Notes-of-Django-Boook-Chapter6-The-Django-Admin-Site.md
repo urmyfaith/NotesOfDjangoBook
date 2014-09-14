@@ -81,3 +81,9 @@ search_fields = ('first_name', 'last_name')
     list_filter=('publication_date',)
 ```
 ![list_filter.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/list_filter.png)
+
+添加**date_hierarchy**
+```python
+date_hierarchy = 'publication_date'
+```
+![date_hierarchy.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/date_hierarchy.png)
