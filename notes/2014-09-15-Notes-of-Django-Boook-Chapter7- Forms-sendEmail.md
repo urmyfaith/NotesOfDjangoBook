@@ -65,6 +65,8 @@
 
 
 ```python
+# mysite\mysite\sendMailView.py
+
 # -*- coding: utf-8-*-
 from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -97,7 +99,7 @@ def contact_thanks(request):
     return HttpResponse('<html><body><h1>thanks</h1></body></html>')
 
 ```
-其中,send_mail()方法的使用:
+### **send_mail()方法的使用:**
 
 > 0.>发送邮件不要额外的什么,配置好信息,Django就能发送,相当于Django起到了一个
 类似网易闪电邮,Foxmail,MS Exchange等邮件客户端(代理)的作用.
@@ -142,5 +144,26 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 **注意:**处理带有CRSF验证的表单的时候,使用**RequestContext**,如下.
 ```python
-return render_to_response('contact_form.html',{'errors':errors,},context_instance=RequestContext(request))
+return render_to_response('contact_form.html'
+    {'errors':errors,},
+    context_instance=RequestContext(request)
+)
+
 ```
+
+**url配置:**
+
+```python
+#mysite\mysite\urls.py
+
+from django.conf.urls import patterns, include, url
+from mysite.sendMailView import contact,contact_thanks
+
+urlpatterns = patterns('',
+    url(r'^contact/$',contact),
+    url(r'^contact/thanks/$',contact_thanks),   
+```
+
+如果做成APP的话,patterns就可以不用硬编码了.
+
+-----
