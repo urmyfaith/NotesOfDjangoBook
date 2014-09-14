@@ -33,3 +33,5 @@ def show_request(request):
         'request_dic':request_dic,
         'request_meat_values':request_meat_values,
         })
+def search_form(request):
+    return render_to_response('search_form.html',)

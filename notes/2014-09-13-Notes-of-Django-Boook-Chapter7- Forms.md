@@ -31,7 +31,7 @@ def show_request(request):
         })
 ```
 3> 编写模版渲染,显示页面:
-**mysite\templatesshow_request.html**
+**mysite\templates\show_request.html**
 ```python
 {% extends 'base.html' %}
 
@@ -76,3 +76,38 @@ def show_request(request):
 
 ---
 
+## 编写简单的表单页面(不含提交后显示)
+
+
+1>在**mysite\urls.py**里配置请求url地址:
+
+```python
+    url(r'^search-form/$',search_form),
+```
+
+2>在**mysite\views.py**添加方法.
+
+```python
+def search_form(request):
+    return render_to_response('search_form.html',)
+```
+
+3> 编写模版渲染,显示页面:
+
+**mysite\templates\show_request.html**
+
+```python
+#search_form.html
+{% extends 'base.html' %}
+{% block title %}show search form {% endblock %}
+{% block content %}
+	<form action="/search/" method="get">
+        <input type="text" name="q">
+        <input type="submit" value="Search">
+    </form>
+{% endblock %}
+```
+
+> 应该来说,提交到的页面地址应该是作为参数传入到模版中,而不是硬编码.
+![search_form.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/search_form.png)
+----
