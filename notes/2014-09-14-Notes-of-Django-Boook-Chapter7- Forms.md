@@ -224,7 +224,7 @@ def show_search_result(request):
 
 > 所以,在提交空搜索字的时候,直接返回到搜索页面即可.
 
-1>** views.py(show_search_result)**里修改显示逻辑:
+1>**views.py(show_search_result)**里修改显示逻辑:
 
 如果带参数,获得搜索参数.
 
