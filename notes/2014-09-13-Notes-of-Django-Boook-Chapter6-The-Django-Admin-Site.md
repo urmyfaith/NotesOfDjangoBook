@@ -87,3 +87,9 @@ search_fields = ('first_name', 'last_name')
 date_hierarchy = 'publication_date'
 ```
 ![date_hierarchy.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/date_hierarchy.png)
+
+添加**ordering**
+```python
+ordering = ('-publication_date',)
+``` 
+![ordering.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/ordering.png)
