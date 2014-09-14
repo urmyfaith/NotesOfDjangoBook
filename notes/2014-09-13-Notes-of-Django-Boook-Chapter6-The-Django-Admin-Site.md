@@ -42,5 +42,32 @@ class Author(models.Model):
     ...
     email =models.EmailField(blank=True,verbose_name='电子邮件')
 ```
+----
 
+##管理界面-表-显示字段的设置:
+
+>1.>继承类
+
+>2.>需要显示字段赋值给list_dispaly
+
+>3.>注册刚才编写的类.
+
+```python
+from django.contrib import admin
+from books.models import Author,Publisher,Book
+
+class AuthorAdmin(admin.ModelAdmin):
+    list_display=('first_name','last_name','email')
+admin.site.register(Publisher)
+admin.site.register(Author,AuthorAdmin)
+admin.site.register(Book)
+
+```
+##管理界面-表-字段可搜索:
+
+上面添加的是list_display,这里添加:search_fields
+```python
+search_fields = ('first_name', 'last_name')
+```
+![search_fields.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/search_fields.png)
 
