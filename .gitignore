@@ -8,7 +8,7 @@
 bin/
 tmp/
 *.tmp
-
+*.sqlite3
 *.bak
 *.swp
 *~.nib
