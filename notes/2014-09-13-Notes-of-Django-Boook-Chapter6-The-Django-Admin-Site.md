@@ -63,6 +63,8 @@ admin.site.register(Author,AuthorAdmin)
 admin.site.register(Book)
 
 ```
+---
+
 ##管理界面-表-字段可搜索:
 
 上面添加的是list_display,这里添加:search_fields
@@ -71,3 +73,11 @@ search_fields = ('first_name', 'last_name')
 ```
 ![search_fields.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/search_fields.png)
 
+---
+##管理界面-表-按时间筛选:
+
+添加**list_filter**
+```python
+    list_filter=('publication_date',)
+```
+![list_filter.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/list_filter.png)
