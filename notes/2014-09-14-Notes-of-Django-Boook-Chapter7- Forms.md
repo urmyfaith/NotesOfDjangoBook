@@ -274,6 +274,7 @@ def show_search_result(request):
 ```
 
 ```python
+#  search_results.html
 {% extends 'base.html' %}
 
 {% block title %}show search results  infomation{% endblock %}
