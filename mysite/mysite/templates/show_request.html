@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}show request infomation{% endblock %}
+{% block content %}
+<table width="300" border="0" bgcolor="blue" bordercolor="black" cellpadding="5" cellspacing="1">
+	{% for key,value in request_dic.items %} 
+	<tr bgcolor="white">              
+		<td>{{ forloop.counter }}</td>            
+		<td>{{ key }}</td>            
+		<td>{{ value }}</td>            
+	 </tr>
+	{% endfor %}
+	{% for k,v in  request_meat_values %}
+	<tr  bgcolor="white">
+		<td>{{ forloop.counter }}</td> 
+		<td>{{ k }}</td>
+		<td>{{ v }}</td>
+	</tr>
+	{% endfor %}
+	</table>
+{% endblock %}

@@ -20,4 +20,20 @@ def hours_ahead(request, offset):
                                                            'hour_offset':offset,
                                                            'next_time':dt
                                                            })
-    
+def show_request(request):
+    request_path = request.path
+    request_host = request.get_host()
+    request_full_path = request.get_full_path()
+    request_is_secure = request.is_secure()
+    request_dic={
+        'request_path':request_path,
+        'request_host':request_host,
+        'request_full_path':request_full_path,
+        'request_is_secure':request_is_secure,
+        }
+    request_meat_values = request.META.items()
+    request_meat_values.sort()
+    return render_to_response('show_request.html',{
+        'request_dic':request_dic,
+        'request_meat_values':request_meat_values,
+        })
