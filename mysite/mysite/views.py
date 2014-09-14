@@ -1,7 +1,10 @@
-from django.http import Http404,HttpResponse
+# -*- coding: utf-8-*-
+from django.http import Http404,HttpResponse,HttpResponseRedirect
 import datetime
 from django.shortcuts import render_to_response
 from books.models import Book
+from django.core.mail import send_mail
+from django.template import RequestContext
 
 def hello(request):
     return HttpResponse("Hello zx.")
@@ -51,3 +54,4 @@ def show_search_result(request):
         #message = 'You submitted an empty form.'
         #return HttpResponse(message)
         return render_to_response('search_form.html', {'error': True})
+
