@@ -112,3 +112,27 @@ def search_form(request):
 
 ![search_form.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/search_form.png)
 ----
+
+## 编写表单提交后显示页面(简单的显示)
+
+1>在**mysite\urls.py**里配置请求url地址:
+
+```python
+     url(r'search/$',show_search_result),
+```
+
+2>在**mysite\views.py**添加方法.
+
+```python
+def show_search_result(request):
+    if 'q' in request.GET:
+        #message = 'You searched for : %r' % request.GET['q']
+        message = 'You searched for : %s' % request.GET['q']
+    else:
+        message = 'You submitted an empty form.'
+    return HttpResponse(message)
+```
+![show_search_result.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/show_search_result.png)
+
+----
+

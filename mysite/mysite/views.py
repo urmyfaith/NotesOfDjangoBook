@@ -35,3 +35,11 @@ def show_request(request):
         })
 def search_form(request):
     return render_to_response('search_form.html',)
+
+def show_search_result(request):
+    if 'q' in request.GET:
+        #message = 'You searched for : %r' % request.GET['q']
+        message = 'You searched for : %s' % request.GET['q']
+    else:
+        message = 'You submitted an empty form.'
+    return HttpResponse(message)
