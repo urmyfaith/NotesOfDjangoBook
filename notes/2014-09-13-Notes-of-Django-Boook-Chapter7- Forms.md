@@ -109,5 +109,6 @@ def search_form(request):
 ```
 
 > 应该来说,提交到的页面地址应该是作为参数传入到模版中,而不是硬编码.
+
 ![search_form.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/search_form.png)
 ----
