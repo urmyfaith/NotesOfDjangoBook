@@ -92,7 +92,7 @@ def search_form(request):
     return render_to_response('search_form.html',)
 ```
 
-3> 编写模版渲染,显示页面:
+3>  
 
 **mysite\templates\show_request.html**
 
@@ -113,7 +113,7 @@ def search_form(request):
 ![search_form.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/search_form.png)
 ----
 
-## 编写表单提交后显示页面(简单的显示)
+## 编写表单提交后显示页面(简单的显示)request.GET['name']
 
 1>在**mysite\urls.py**里配置请求url地址:
 
@@ -135,4 +135,85 @@ def show_search_result(request):
 ![show_search_result.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/show_search_result.png)
 
 ----
+
+## GET和POST的用法:
+
+具体参见:
+
+http://www.w3school.com.cn/tags/html_ref_httpmethods.asp
+
+> 两种 HTTP 请求方法：GET 和 POST
+在客户机和服务器之间进行请求-响应时，两种最常被用到的方法是：GET 和 POST。
+* GET - 从指定的资源请求数据。(不需要修改服务器数据)
+* POST - 向指定的资源提交要被处理的数据(需要修改服务器后台数据)
+
+---
+
+## 编写表单提交后显示页面(查询数据库后输出)
+
+1>在**mysite\views.py**修改方法.
+
+* 得到查询字符串request.GET['q']
+
+* 筛选数据库记录filter(a=b)
+
+* 参数传入模版render_to_response
+
+* 渲染输出显示页面.
+ 
+```python
+def show_search_result(request):
+    if 'q' in request.GET:
+        #message = 'You searched for : %r' % request.GET['q']
+        #message = 'You searched for : %s' % request.GET['q']
+        search_str = request.GET['q']
+        books = Book.objects.filter(title__icontains=search_str)
+        return render_to_response('search_results.html',{
+            'books':books,
+            'search_str':search_str
+            })
+    else:
+        message = 'You submitted an empty form.'
+    return HttpResponse(message)
+```
+
+2> 编写模版渲染,显示页面:
+
+**mysite\templates\search_results.html**
+```python
+#search_results.html
+{% extends 'base.html' %}
+
+{% block title %}show search results  infomation{% endblock %}
+{% block content %}
+<p>You searched for: <strong>{{ search_str }}</strong></p>
+
+{% if books %}
+    <p>Found {{ books|length }} book{{ books|pluralize }}.</p>
+	<table width="600" border="0" bgcolor="blue" bordercolor="black" cellpadding="5" cellspacing="1">
+		<tr bgcolor="white"  > 
+			<td>#</td>   
+			<td> title </td>
+			<td>book.publisher </td>
+			<td>publication_date </td>
+		</tr>
+        {% for book in books %}
+		<tr bgcolor="white" > 
+			<td>{{ forloop.counter }}</td>   
+			<td>{{ book.title }}</td>
+			<td>{{ book.publisher }}</td>
+			<td>{{ book.publication_date }}</td>
+		</tr>
+        {% endfor %}
+	</table>
+{% else %}
+    <p>No books matched your search criteria.</p>
+{% endif %}
+	
+{% endblock %}
+
+```
+![show_search_result_in_db.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/show_search_result_in_db.png)
+
+---
 

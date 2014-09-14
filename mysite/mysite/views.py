@@ -1,6 +1,7 @@
 from django.http import Http404,HttpResponse
 import datetime
 from django.shortcuts import render_to_response
+from books.models import Book
 
 def hello(request):
     return HttpResponse("Hello zx.")
@@ -39,7 +40,13 @@ def search_form(request):
 def show_search_result(request):
     if 'q' in request.GET:
         #message = 'You searched for : %r' % request.GET['q']
-        message = 'You searched for : %s' % request.GET['q']
+        #message = 'You searched for : %s' % request.GET['q']
+        search_str = request.GET['q']
+        books = Book.objects.filter(title__icontains=search_str)
+        return render_to_response('search_results.html',{
+            'books':books,
+            'search_str':search_str
+            })
     else:
         message = 'You submitted an empty form.'
     return HttpResponse(message)
