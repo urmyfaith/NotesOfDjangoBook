@@ -99,6 +99,9 @@ def contact_thanks(request):
 ```
 其中,send_mail()方法的使用:
 
+> 0.>发送邮件不要额外的什么,配置好信息,Django就能发送,相当于Django起到了一个
+类似网易闪电邮,Foxmail,MS Exchange等邮件客户端(代理)的作用.
+
 > 1.> 导入相应的包:from django.core.mail import send_mail
 
 > 2.>四个参数:主题,邮件正文,发送人,接收人列表,(其他可选参数.)
@@ -117,7 +120,7 @@ html_message: html格式正文
 ```
 > 3.>发送邮件需要在settings.py配置:
 
-例如,我们在settings.py里配置如下:
+例如,我们在settings.py里配置如下(使用QQ邮箱):
 ```python
 # Send mail:
 
