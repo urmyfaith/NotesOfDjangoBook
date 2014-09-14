@@ -72,3 +72,7 @@ def show_request(request):
 	 </tr>
 	{% endfor %}
 ```
+> request_dic标准的字典的遍历和request_meat_values的遍历稍有区别,在于是否使用items方法.
+
+---
+
