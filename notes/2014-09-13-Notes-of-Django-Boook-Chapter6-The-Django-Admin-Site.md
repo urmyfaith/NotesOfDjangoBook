@@ -93,3 +93,28 @@ date_hierarchy = 'publication_date'
 ordering = ('-publication_date',)
 ``` 
 ![ordering.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/ordering.png)
+
+
+## 管理界面-表- 多对多字段
+
+* filter_horizontal 水平筛选
+ 
+* filter_vertical  垂直筛选
+
+* raw_id_fields  原始id字段
+
+> 使用filter_horizontal默认显示所有的记录,这样页面加载很慢,所以配合raw_id_fields,弹窗选择id.
+
+
+```python
+class BookAdmin(admin.ModelAdmin):
+    list_display=('title','publisher','publication_date')
+    list_filter=('publication_date',)
+    date_hierarchy = 'publication_date'
+    ordering = ('-publication_date',)
+    filter_horizontal = ('author',)
+    raw_id_fields = ('publisher',)
+```
+![filter_horizontal.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/filter_horizontal.png)
+
+![raw_id_fields.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/raw_id_fields.png)
