@@ -1,8 +1,8 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from mysite.views import hello,current_datetime,hours_ahead,show_request,search_form,show_search_result
-from mysite.sendMailView import contact,contact_thanks
-
+#from mysite.sendMailView import contact,contact_thanks
+from mysite.sendMailViewByForms import contact,contact_thanks
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'mysite.views.home', name='home'),
