@@ -255,5 +255,8 @@ def day_archive(request,month,year,day):
 
 ![fake_captured_URLconf_values.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/fake_captured_URLconf_values.png)
 
---
+---
+
+## 创建一个通用视图
+
 
