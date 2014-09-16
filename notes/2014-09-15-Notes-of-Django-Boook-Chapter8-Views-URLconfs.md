@@ -223,6 +223,8 @@ def foo_bar_view(request,template_name,search_str):
 
 2) 在视图里,将两个视图函数合并为一个,使用字典参数,这样就是多个不同的视图.
 
+3)达到:动态指定模版,动态指定一些变量的值(几个值之间选择).
+
 ![foo_bar_view.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/foo_bar_view.png)
 ---
 
