@@ -21,6 +21,8 @@ urlpatterns += patterns('mysite.views',
 urlpatterns += patterns('mysite.articlesViews',
     (r'^chapter8_url_view/name_groups/articles/(?P<year>\d{4})/$', 'year_archive'),
     (r'^chapter8_url_view/name_groups/articles/(?P<year>\d{4})/(?P<month>\d{2})/$','month_archive'),
+    url(r'^chapter8_url_view/fake_captured_URLconf_values/articles/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/$','day_archive'),
+    url(r'^chapter8_url_view/fake_captured_URLconf_values/articles/birthday/$','day_archive',{'year':'2014','month':'09','day':'16'}),
 )
 
 urlpatterns += patterns('mysite.foobar_view',

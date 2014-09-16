@@ -228,5 +228,32 @@ def foo_bar_view(request,template_name,search_str):
 ![foo_bar_view.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/foo_bar_view.png)
 ---
 
+### 伪造捕捉到的URLconf值
 
+> **你有匹配某个模式的一堆视图，以及一个并不匹配这个模式但视图逻辑是一样的URL**
+
+怎么解决这个问题?
+
+使用 命名组(Named Groups) + 传递额外的参数到视图函数中 上面的两种方法结合来做.
+
+```python
+
+#urls.py
+urlpatterns += patterns('mysite.articlesViews',
+    url(r'^chapter8_url_view/fake_captured_URLconf_values/articles/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/$','day_archive'),
+    url(r'^chapter8_url_view/fake_captured_URLconf_values/articles/birthday/$','day_archive',{'year':'2014','month':'09','day':'16'}),
+)
+
+#articlesViews.py
+def day_archive(request,month,year,day):
+    rawHtml='<html><head></head><body>day_archive:%s-%s-%s</body></html>'% (year,month,day)
+    return HttpResponse(rawHtml
+```
+这样,第一个URL匹配模式,匹配一系列的日期
+
+第二个URL虽然结构不同,但是它匹配到了同一个视图中去.
+
+![fake_captured_URLconf_values.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/fake_captured_URLconf_values.png)
+
+--
 
