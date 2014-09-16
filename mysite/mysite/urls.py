@@ -19,7 +19,7 @@ urlpatterns += patterns('mysite.views',
 )
 
 urlpatterns += patterns('mysite.articlesViews',
-    (r'^articles/(\d{4})/$', 'year_archive'),
-    (r'^articles/(\d{4})/(\d{2})/$','month_archive'),
+    (r'^articles/(?P<year>\d{4})/$', 'year_archive'),
+    (r'^articles/(?P<year>\d{4})/(?P<month>\d{2})/$','month_archive'),
 )
 

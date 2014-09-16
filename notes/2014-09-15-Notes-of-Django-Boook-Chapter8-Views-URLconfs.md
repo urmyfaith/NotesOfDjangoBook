@@ -119,7 +119,7 @@ urlpatterns += patterns('mysite.views',
 
 ---
 
-## 命名组(Named Groups)
+## 命名组(Named Groups)(?P\<name>pattern) 
 如果不使用命名组,是这样的:
 URLconf可能是:
 ```python
@@ -141,9 +141,40 @@ def month_archive(request,year,month):
     rawHtml='<html><head></head><body>year_archive:%s-%s</body></html>'% (year,month)
     return HttpResponse(rawHtml)
 ```
-> 这样的话,在URL里的参数,传递到视图中去的时候,是按顺序传递:
+> 这样的话,在URL里的参数,传递到视图中去的时候,是按**顺序传递**:
 articles/(\d{4})/(\d{2})/    -->    articles/year/month/
 
+如果我们使用命名组的话,它的形式是这样的:**(?P\<name>pattern)**
 
+```python
+#urls.py
+urlpatterns += patterns('mysite.articlesViews',
+    (r'^articles/(?P<year>\d{4})/$', 'year_archive'),
+    (r'^articles/(?P<year>\d{4})/(?P<month>\d{2})/$','month_archive'),
+)
+```
+相应的,视图中,我们可以这样写:
+```python
+#articlesViews.py
+from django.http import HttpResponse
+def year_archive(request,year):
+    rawHtml='<html><head></head><body>year_archive:%s</body></html>'% year
+    return HttpResponse(rawHtml)
+def month_archive(request,month,year):
+    rawHtml='<html><head></head><body>year_archive:%s-%s</body></html>'% (year,month)
+    return HttpResponse(rawHtml)
+```
+> 注意:
+
+1) 在URLconf中,使用了命名组的方式,即第一个位置命名为year,第二个位置命名为month
+
+2) 在view文件,month_archive视图中的参数,我们故意颠倒了位置.
+
+
+**小结:** 使用命名组,可以很好的说明参数位置所代表的意义,也可以防止顺序颠倒带来的错误.
+
+![named_groups_month_year.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/named_groups_month_year.png)
+
+----
 
 
