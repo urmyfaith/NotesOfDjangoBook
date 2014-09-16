@@ -43,3 +43,20 @@ urlpatterns = patterns('',
 ```
 ![import_package_instead_of_func.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/import_package_instead_of_func.png)
 
+
+### 导入视图函数-->直接通过app.package.func访问函数:
+```python
+from django.conf.urls import *
+urlpatterns = patterns('',
+...
+    url(r'^contact/$','mysite.sendMailViewByForms.contact'),
+    url(r'^contact/thanks/$','mysite.sendMailViewByFormscontact_thanks'), 
+...                 
+)
+```
+> 注意:这里有些改变:
+1) 导入包从"from django.conf.urls import patterns, include, url"改为了"from django.conf.urls import *"
+
+2) 没有导入sendMailViewByForms包,而是直接使用了**带引号的**mysite.sendMailViewByForms.contact来访问函数.
+
+*(ps.如果不带引号,就会找不到包,也就找不到函数.)*
