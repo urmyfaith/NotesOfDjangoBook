@@ -119,3 +119,31 @@ urlpatterns += patterns('mysite.views',
 
 ---
 
+## 命名组(Named Groups)
+如果不使用命名组,是这样的:
+URLconf可能是:
+```python
+#urls.py
+urlpatterns += patterns('mysite.articlesViews',
+    (r'^articles/(\d{4})/$', 'year_archive'),
+    (r'^articles/(\d{4})/(\d{2})/$','month_archive'),
+)
+```
+view可能是:
+```python
+#articlesViews.py
+from django.http import HttpResponse
+
+def year_archive(request,year):
+    rawHtml='<html><head></head><body>year_archive:%s</body></html>'% year
+    return HttpResponse(rawHtml)
+def month_archive(request,year,month):
+    rawHtml='<html><head></head><body>year_archive:%s-%s</body></html>'% (year,month)
+    return HttpResponse(rawHtml)
+```
+> 这样的话,在URL里的参数,传递到视图中去的时候,是按顺序传递:
+articles/(\d{4})/(\d{2})/    -->    articles/year/month/
+
+
+
+

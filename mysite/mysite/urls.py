@@ -17,3 +17,9 @@ urlpatterns += patterns('mysite.views',
     url(r'^request-info/$','show_request'),
     url(r'^search-form/$','search_form'),
 )
+
+urlpatterns += patterns('mysite.articlesViews',
+    (r'^articles/(\d{4})/$', 'year_archive'),
+    (r'^articles/(\d{4})/(\d{2})/$','month_archive'),
+)
+
