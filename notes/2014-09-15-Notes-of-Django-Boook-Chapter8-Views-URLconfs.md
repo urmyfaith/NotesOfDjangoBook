@@ -60,3 +60,34 @@ urlpatterns = patterns('',
 2) 没有导入sendMailViewByForms包,而是直接使用了**带引号的**mysite.sendMailViewByForms.contact来访问函数.
 
 *(ps.如果不带引号,就会找不到包,也就找不到函数.)*
+
+### patterns() 对象相加
+
+```python
+#urls.py
+from django.conf.urls import *
+from django.contrib import admin
+
+urlpatterns = patterns('',
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^contact/$','mysite.sendMailViewByForms.contact'),
+    url(r'^contact/thanks/$','mysite.sendMailViewByFormscontact_thanks'),                  
+)
+urlpatterns += patterns('mysite.views',
+    url(r'^hello/$','hello'),
+    url(r'^time/$','current_datetime'),
+    url(r'^time/plus/(\d{1,2})/$', 'hours_ahead'),
+    url(r'^search/$','show_search_result'),
+    url(r'^request-info/$','show_request'),
+    url(r'^search-form/$','search_form'),
+)
+```
+> 注意:
+
+1) 这里的两个patterns()相加了
+2) 后面的将会查找的是'mysite.views.hello'等,
+
+他们有一个公共的前缀,这里提取出来了.
+
+3) 不导入包的话,**后面的实际视图函数名称,使用了单引号.**
+
