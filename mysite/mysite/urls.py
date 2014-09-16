@@ -24,6 +24,8 @@ urlpatterns += patterns('mysite.articlesViews',
 )
 
 urlpatterns += patterns('mysite.foobar_view',
-    (r'^chapter8_url_view/pass_extra_options_to_view/foo/$','foo_view'),
-    (r'^chapter8_url_view/pass_extra_options_to_view/bar/$','bar_view'),
+    (r'^chapter8_url_view/pass_extra_options_to_view/foo/$', \
+     'foo_bar_view',{'template_name':'foobar/foo.html','search_str':'world'}),
+    (r'^chapter8_url_view/pass_extra_options_to_view/bar/$', \
+     'foo_bar_view',{'template_name':'foobar/bar.html','search_str':'the'}),
 )

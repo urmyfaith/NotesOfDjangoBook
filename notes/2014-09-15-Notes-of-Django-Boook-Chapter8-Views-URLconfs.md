@@ -200,6 +200,31 @@ def bar_view(request):
     return render(request,'foobar/bar.html',{'books':books})
 
 ```
+这样村的问题:功能机会相同,只是渲染的模版不一样.
+
+我们可以使用传递额外的参数到view中去,动态的指定渲染模版:
+
+```python
+#urls.py
+urlpatterns += patterns('mysite.foobar_view',
+    (r'^chapter8_url_view/pass_extra_options_to_view/foo/$', \
+     'foo_bar_view',{'template_name':'foobar/foo.html','search_str':'world'}),
+    (r'^chapter8_url_view/pass_extra_options_to_view/bar/$', \
+     'foo_bar_view',{'template_name':'foobar/bar.html','search_str':'the'}),
+)
+#foobar_view.py
+def foo_bar_view(request,template_name,search_str):
+    books=Book.objects.filter(title__icontains=search_str)
+    return render(request,template_name,{'books':books})
+```
+1) 在urls.py的patterns里,使用的第三个参数:传入了一个字典.
+
+这个字典会从URLconf传入到视图中.
+
+2) 在视图里,将两个视图函数合并为一个,使用字典参数,这样就是多个不同的视图.
+
+![foo_bar_view.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/foo_bar_view.png)
+---
 
 
 
