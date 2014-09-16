@@ -3,8 +3,11 @@ from django.contrib import admin
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^contact/$','mysite.sendMailViewByForms.contact'),
-    url(r'^contact/thanks/$','mysite.sendMailViewByFormscontact_thanks'),                  
+)
+
+urlpatterns += patterns('mysite.sendMailViewByForms',
+    url(r'^contact/$','contact'),
+    url(r'^contact/thanks/$','contact_thanks'),                  
 )
 urlpatterns += patterns('mysite.views',
     url(r'^hello/$','hello'),
