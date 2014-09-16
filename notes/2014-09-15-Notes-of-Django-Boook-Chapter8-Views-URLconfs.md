@@ -176,5 +176,30 @@ def month_archive(request,month,year):
 ![named_groups_month_year.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/named_groups_month_year.png)
 
 ----
+## 传递额外的参数到视图函数中
+
+从上面的命名组中可以看到,URLconf可以传递参数到View中.
+那么怎么传递额外的参数到视图中?
+
+假设,有两个url,分别匹配到两个视图,但是**它们使用不同的模版来渲染.**
+```python
+#urls.py
+urlpatterns += patterns('mysite.foobar_view',
+    (r'^chapter8_url_view/pass_extra_options_to_view/foo/$','foo_view'),
+    (r'^chapter8_url_view/pass_extra_options_to_view/bar/$','bar_view'),
+)
+
+#foobar_view.py
+from django.shortcuts import render
+from books.models import Book
+def foo_view(request):
+    books = Book.objects.filter(title__icontains='world')  
+    return render(request,'foobar/foo.html',{'books':books})
+def bar_view(request):
+    books = Book.objects.filter(title__icontains='the')
+    return render(request,'foobar/bar.html',{'books':books})
+
+```
+
 
 

@@ -1,0 +1,26 @@
+<html>
+ </head>
+ <body>
+  {% if books %}
+    <p>Found {{ books|length }} book{{ books|pluralize }}.</p>
+	<table width="600" border="0" bgcolor="blue" bordercolor="black" cellpadding="5" cellspacing="1">
+		<tr bgcolor="white"  > 
+			<td>#</td>   
+			<td> title </td>
+			<td>book.publisher </td>
+			<td>publication_date </td>
+		</tr>
+        {% for book in books %}
+		<tr bgcolor="white" > 
+			<td>{{ forloop.counter }}</td>   
+			<td>{{ book.title }}</td>
+			<td>{{ book.publisher }}</td>
+			<td>{{ book.publication_date }}</td>
+		</tr>
+        {% endfor %}
+	</table>
+{% else %}
+    <p>No books matched your search criteria.</p>
+{% endif %}
+ </body>
+</html>

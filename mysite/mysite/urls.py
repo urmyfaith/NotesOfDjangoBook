@@ -19,7 +19,11 @@ urlpatterns += patterns('mysite.views',
 )
 
 urlpatterns += patterns('mysite.articlesViews',
-    (r'^articles/(?P<year>\d{4})/$', 'year_archive'),
-    (r'^articles/(?P<year>\d{4})/(?P<month>\d{2})/$','month_archive'),
+    (r'^chapter8_url_view/name_groups/articles/(?P<year>\d{4})/$', 'year_archive'),
+    (r'^chapter8_url_view/name_groups/articles/(?P<year>\d{4})/(?P<month>\d{2})/$','month_archive'),
 )
 
+urlpatterns += patterns('mysite.foobar_view',
+    (r'^chapter8_url_view/pass_extra_options_to_view/foo/$','foo_view'),
+    (r'^chapter8_url_view/pass_extra_options_to_view/bar/$','bar_view'),
+)
