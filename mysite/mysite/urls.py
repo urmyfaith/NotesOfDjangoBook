@@ -31,3 +31,8 @@ urlpatterns += patterns('mysite.foobar_view',
     (r'^chapter8_url_view/pass_extra_options_to_view/bar/$', \
      'foo_bar_view',{'template_name':'foobar/bar.html','search_str':'the'}),
 )
+
+urlpatterns += patterns('mysite.objectView',
+    url(r'^chapter8_url_view/make_a_view_generic/blog/$','blog_list'),
+    url(r'^chapter8_url_view/make_a_view_generic/book/$','book_list'),
+)

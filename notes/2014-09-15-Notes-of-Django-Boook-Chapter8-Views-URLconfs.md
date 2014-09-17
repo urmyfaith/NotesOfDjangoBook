@@ -259,4 +259,51 @@ def day_archive(request,month,year,day):
 
 ## 创建一个通用视图
 
+需求:比如这个视图显示一系列blog对象,那个视图显示一系列book对象:
+如:
+```python
+#urls.py
+urlpatterns += patterns('mysite.objectView',
+    url(r'^chapter8_url_view/make_a_view_generic/blog/$','blog_list'),
+    url(r'^chapter8_url_view/make_a_view_generic/book/$','book_list'),
+)
 
+#objectView.py
+from django.shortcuts import render_to_response
+from books.models import Book
+from blog.models import blog
+def blog_list(request):
+    blog_list=blog.objects.all()
+    return render_to_response('make_a_view_generic/blog_list.html',{'blogs':blog_list})
+def book_list(request):
+    book_list=Book.objects.all()
+    return render_to_response('make_a_view_generic/book_list.html',{'books':book_list})
+
+#make_a_view_generic/book_list.html
+<table width="600" border="0" bgcolor="blue" bordercolor="black" cellpadding="5" cellspacing="1">
+		<tr bgcolor="white"  > 
+			<td>#</td>   
+			<td> subject </td>
+			<td>author </td>
+			<td>content </td>
+			<td>post_time </td>
+		</tr>
+        {% for blog in blogs %}
+		<tr bgcolor="white" > 
+			<td>{{ forloop.counter }}</td>   
+			<td>{{ blog.subject }}</td>
+			<td>{{ blog.author }}</td>
+			<td>{{ blog.content }}</td>
+			<td>{{ blog.post_time }}</td>
+		</tr>
+        {% endfor %}
+	</table>
+```
+![make_a_view_generic_01.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/make_a_view_generic_01.png)
+
+
+可以看到,我们在objectView.py里定义了两个视图,那么怎么样才能只是用一个视图呢?
+
+```python
+
+```

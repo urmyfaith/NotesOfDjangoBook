@@ -1,0 +1,18 @@
+<table width="600" border="0" bgcolor="blue" bordercolor="black" cellpadding="5" cellspacing="1">
+		<tr bgcolor="white"  > 
+			<td>#</td>   
+			<td> subject </td>
+			<td>author </td>
+			<td>content </td>
+			<td>post_time </td>
+		</tr>
+        {% for blog in blogs %}
+		<tr bgcolor="white" > 
+			<td>{{ forloop.counter }}</td>   
+			<td>{{ blog.subject }}</td>
+			<td>{{ blog.author }}</td>
+			<td>{{ blog.content }}</td>
+			<td>{{ blog.post_time }}</td>
+		</tr>
+        {% endfor %}
+	</table>
