@@ -1,5 +1,7 @@
 from django.conf.urls import *
 from django.contrib import admin
+from books.models import Book
+from blog.models import blog
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
@@ -33,6 +35,6 @@ urlpatterns += patterns('mysite.foobar_view',
 )
 
 urlpatterns += patterns('mysite.objectView',
-    url(r'^chapter8_url_view/make_a_view_generic/blog/$','blog_list'),
-    url(r'^chapter8_url_view/make_a_view_generic/book/$','book_list'),
+    url(r'^chapter8_url_view/make_a_view_generic/blog/$','object_list',{'model':blog}),
+    url(r'^chapter8_url_view/make_a_view_generic/book/$','object_list',{'model':Book}),
 )

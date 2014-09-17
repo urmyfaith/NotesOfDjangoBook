@@ -305,5 +305,34 @@ def book_list(request):
 可以看到,我们在objectView.py里定义了两个视图,那么怎么样才能只是用一个视图呢?
 
 ```python
+#urls.py
+from books.models import Book
+from blog.models import blog
+urlpatterns += patterns('mysite.objectView',
+    url(r'^chapter8_url_view/make_a_view_generic/blog/$','object_list',{'model':blog}),
+    url(r'^chapter8_url_view/make_a_view_generic/book/$','object_list',{'model':Book}),
+)
 
+#objectView.py
+def object_list(request,model):
+    obj_list=model.objects.all()
+    key_name=model.__name__.lower()
+    template_name='make_a_view_generic/%s_list.html' % key_name
+    key_name=key_name+'s'
+    return render_to_response(template_name,{key_name:obj_list})
 ```
+
+> 如上:
+
+1) 在URLconf里使用了同一个视图函数object_list
+
+2) 使用了额外的参数,从URLconf传递到视图函数,(见上面的*传递额外的参数到视图函数中*)
+
+3) 如果模版不同
+
+a) 可以像上面使用类的名字
+b) 可以使用额外参数指定
+
+4) 像上面的,完全可以使用同一个模版来渲染.
+
+-----
