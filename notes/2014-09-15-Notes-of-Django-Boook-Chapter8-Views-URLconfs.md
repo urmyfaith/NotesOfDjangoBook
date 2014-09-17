@@ -523,3 +523,44 @@ def post_contact(request):
 (PS,虽然显示了thanks界面,但是没有收到邮件,还以为是哪里出错了,看来一集看是回来,收到了好几封邮件.冏.)
 
 ----
+## 请求方法分支的讨论 - 带参数的请求分支
+
+上面的分支请求,没有处理请求带额外参数的情况,那么如果带参数,该怎么处理呢?
+
+```python
+#sendMailViewByForms.py
+
+##def method_splitter(request,GET_method=None,POST_method=None):
+##    if request.method =='POST' and POST_method is not None:
+##        return POST_method(request)
+##    elif request.method == 'GET' and  GET_method is not None:
+##        return GET_method(request)
+##    raise Http404
+
+def method_splitter(request,*args,**kargs):
+    get_method_view = kargs.pop('GET_method',None)
+    post_method_view = kargs.pop('POST_method',None)
+    if request.method == 'GET' and get_method_view is not None:
+        return get_method_view(request,*args,**kargs)
+    elif request.method =='POST' and post_method_view  is not None:
+        return post_method_view(request,*args,**kargs)
+    raise Http404
+```
+1) 这里,我们重写了method_splitter()方法,
+
+这个方法不再是带位置参数和带默认值的关键字参数,
+
+而是,位置参数 + 代表一元组参数 + 代表关键字参数.
+
+>  如果你在函数定义时,
+
+> 只在参数前面加一个*号,所有传递给函数的参数将会保存为一个元组. 
+
+> 如果你在函数定义时,在参数前面加两个*号,所有传递给函数的关键字参数,将会保存为一个字典
+
+2) 这里,使用pop()方法从字典里取出值(代表一个view对象).更为关键的是,返回对象的同时,从字典里删除了这组key-value.
+
+3) 使用得到的视图对象,传入参数,进行分支.
+
+----
+

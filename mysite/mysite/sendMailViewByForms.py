@@ -26,11 +26,20 @@ def contact(request):
 def contact_thanks(request):
     return HttpResponse('<html><body><h1>thanks</h1></body></html>')
 
-def method_splitter(request,GET_method=None,POST_method=None):
-    if request.method =='POST' and POST_method is not None:
-        return POST_method(request)
-    elif request.method == 'GET' and  GET_method is not None:
-        return GET_method(request)
+##def method_splitter(request,GET_method=None,POST_method=None):
+##    if request.method =='POST' and POST_method is not None:
+##        return POST_method(request)
+##    elif request.method == 'GET' and  GET_method is not None:
+##        return GET_method(request)
+##    raise Http404
+
+def method_splitter(request,*args,**kargs):
+    get_method_view = kargs.pop('GET_method',None)
+    post_method_view = kargs.pop('POST_method',None)
+    if request.method == 'GET' and get_method_view is not None:
+        return get_method_view(request,*args,**kargs)
+    elif request.method =='POST' and post_method_view  is not None:
+        return post_method_view(request,*args,**kargs)
     raise Http404
 
 def get_contact(request):
