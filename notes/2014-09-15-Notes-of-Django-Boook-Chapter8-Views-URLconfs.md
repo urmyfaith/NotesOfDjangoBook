@@ -299,8 +299,6 @@ def book_list(request):
         {% endfor %}
 	</table>
 ```
-![make_a_view_generic_01.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/make_a_view_generic_01.png)
-
 
 可以看到,我们在objectView.py里定义了两个视图,那么怎么样才能只是用一个视图呢?
 
@@ -336,3 +334,49 @@ b) 可以使用额外参数指定
 4) 像上面的,完全可以使用同一个模版来渲染.
 
 -----
+
+## 使用默认的视图参数
+
+> 如果访问 'www.abc.com/blog/',那么我们希望默认显示的是第一个页博客,如果访问'www.abc.com/blog/page3',那么我们显示第三页博客.
+
+> 然而,第一页和第三页博客的显示方法应该一样的,也就是使用同一个view视图函数来实现,那么怎么实现这个呢?
+
+我们使用默认的视图函数参数来实现:
+```python
+#urls.py
+urlpatterns += patterns('mysite.blogPageView',
+    url(r'^chapter8_url_view/use_default_view_arguments/blog/$','show_blog_page'),
+    url(r'^chapter8_url_view/use_default_view_arguments/blog/page(?P<num>\d+)/$','show_blog_page')
+from django.http import HttpResponse
+
+#blogPageView.py
+def show_blog_page(request,num='1'):
+    rawHtml='<html><head></head><body>you are at page:%s.</body></html>'% num
+    return HttpResponse(rawHtml)
+```
+可以看到,
+
+1) 在URLconfs里,使用了同一个视图函数:'mysite.blogPageView.show_blog_page'
+
+2) 在视图里,我们使用了一个参数num,但是它被赋予了一个默认的值1.
+
+3) 这样,在访问第一个URL的时候,将使用默认参数.在访问第二个URL的时候,num的值将是从URL里提取出来的.
+ 
+
+>4) **但是**,如果使用额外的参数,从URLcongs里传递到视图,num的值
+
+> 以字典里的为准,而不是从URL里捕捉到.
+
+例如:
+```python
+urlpatterns = patterns('',
+    (r'^mydata/(?P<id>\d+)/$', views.my_view, {'id': 3}),
+)
+```
+
+**在视图里,id的值将会永远是3,而不管URL里捕捉到的值.**
+
+![use_default_view_arguments.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/use_default_view_arguments.png)
+
+----
+

@@ -38,3 +38,8 @@ urlpatterns += patterns('mysite.objectView',
     url(r'^chapter8_url_view/make_a_view_generic/blog/$','object_list',{'model':blog}),
     url(r'^chapter8_url_view/make_a_view_generic/book/$','object_list',{'model':Book}),
 )
+
+urlpatterns += patterns('mysite.blogPageView',
+    url(r'^chapter8_url_view/use_default_view_arguments/blog/$','show_blog_page'),
+    url(r'^chapter8_url_view/use_default_view_arguments/blog/page(?P<num>\d+)/$','show_blog_page'),
+)
