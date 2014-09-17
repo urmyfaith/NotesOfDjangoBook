@@ -380,3 +380,33 @@ urlpatterns = patterns('',
 
 ----
 
+## 关于URL的匹配的说明:
+
+URL匹配的时候,
+
+1) 不会区分get,post,head,等方法,
+
+2) 不会去匹配post参数:
+
+例如,对于"www.example.com/myapp/?page=3 ",只会去匹配到'myapp/'
+
+3) 匹配到patterns里的一行后,不再往下匹配. (**短路逻辑**)
+```python
+urlpatterns = patterns('',
+    # ...
+    ('^auth/user/add/$', views.user_add_stage),
+    ('^([^/]+)/([^/]+)/add/$', views.add_stage),
+    # ...
+)
+```
+即上面的patterns,'auth/user/add/'将会匹配到第一行,而不是第二行.
+
+4) 从URL里使用命名组的参数的值都是字符串
+
+例如:
+```python
+    url(r'^chapter8_url_view/fake_captured_URLconf_values/articles/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/$','day_archive'),
+```
+year,month,day将都是字符串,而不是整数!
+
+---
