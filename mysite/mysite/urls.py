@@ -2,15 +2,24 @@ from django.conf.urls import *
 from django.contrib import admin
 from books.models import Book
 from blog.models import blog
+from mysite import sendMailViewByForms
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 )
 
-urlpatterns += patterns('mysite.sendMailViewByForms',
-    url(r'^contact/$','contact'),
-    url(r'^contact/thanks/$','contact_thanks'),                  
+##urlpatterns += patterns('mysite.sendMailViewByForms',
+##    url(r'^contact/$','contact'),
+##    url(r'^contact/thanks/$','contact_thanks'),                  
+##)
+
+urlpatterns += patterns('',
+    url(r'^contact/$',sendMailViewByForms.method_splitter, \
+        {'GET_method':sendMailViewByForms.get_contact, \
+         'POST_method':sendMailViewByForms.post_contact}),
+    url(r'^contact/thanks/$',sendMailViewByForms.contact_thanks),                  
 )
+
 urlpatterns += patterns('mysite.views',
     url(r'^hello/$','hello'),
     url(r'^time/$','current_datetime'),

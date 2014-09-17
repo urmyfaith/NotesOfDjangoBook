@@ -410,3 +410,116 @@ urlpatterns = patterns('',
 year,month,day将都是字符串,而不是整数!
 
 ---
+
+## 请求方法分支的讨论
+
+在上面一章里,有个通过填写表单发送邮件的例子:
+
+```python
+
+# mysite\mysite\sendMailViewByForms.py
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            send_mail(
+                cd['subject'],
+                cd['message'],
+                cd.get('email','urmyfaith@qq.com'),
+                ['1278908611@qq.com','904312072@qq.com'],
+                )
+            return HttpResponseRedirect('/contact/thanks/')
+    else:
+        #GET Method ---default visite site method.
+        form = ContactForm(initial={'subject': 'I love your site!'})
+    return render_to_response('contact_formByForms.html',{'form': form},context_instance=RequestContext(request))
+
+```
+访问"[ip]:/contact/"url的时候,通过contact()方法来处理.
+
+* 如果是POST请求方法访问,那么取出表单数据,发送邮件,页面重定向
+
+* 如果是GET方法访问,那么初始化表单,渲染页面后输出.
+
+将上面的代码概括一下:
+```python
+def some_page(request):
+    if request.method == 'POST':
+        do_something_for_post()
+        return HttpResponseRedirect('/someurl/')
+    elif request.method == 'GET':
+        do_something_for_get()
+        return render_to_response('page.html')
+    else:
+        raise Http404()
+```
+
+在上面的例子中,这两种请求方法被写在了一起,如果对每一种请求方法都很复杂,
+
+那么,将两种请求放在一个view函数里写就不适合了,考虑分开两个视图来编写.
+
+现在问题是,怎么样实现使用两个视图来编写?
+
+```python
+
+#urls.py
+from mysite import sendMailViewByForms
+##urlpatterns += patterns('mysite.sendMailViewByForms',
+##    url(r'^contact/$','contact'),
+##    url(r'^contact/thanks/$','contact_thanks'),                  
+##)
+
+urlpatterns += patterns('',
+    url(r'^contact/$',sendMailViewByForms.method_splitter, \
+        {'GET_method':sendMailViewByForms.get_contact, \
+         'POST_method':sendMailViewByForms.post_contact}),
+    url(r'^contact/thanks/$',sendMailViewByForms.contact_thanks),                  
+)
+#sendMailViewByForms.py
+def method_splitter(request,GET_method=None,POST_method=None):
+    if request.method =='POST' and POST_method is not None:
+        return POST_method(request)
+    elif request.method == 'GET' and  GET_method is not None:
+        return GET_method(request)
+    raise Http404
+
+def get_contact(request):
+    assert request.method == 'GET'
+    form = ContactForm(initial={'subject': 'amazing site!'})
+    return render_to_response('contact_formByForms.html',{'form': form},context_instance=RequestContext(request))
+
+def post_contact(request):
+    assert request.method == 'POST'
+    form = ContactForm(request.POST)
+    if form.is_valid():
+        cd = form.cleaned_data
+        send_mail(
+            cd['subject'],
+            cd['message'],
+            cd.get('email','urmyfaith@qq.com'),
+            ['1278908611@qq.com','urmyfaith@qq.com'],         
+            )
+        print 'send_mail_sucess'
+        return HttpResponseRedirect('/contact/thanks/')
+    return HttpResponseRedirect('/contact/')
+
+```
+
+> 让我们来看看怎么实现的:
+
+1) 在patterns里,我们把'contact/',匹配了视图函数method_splitter(),但是,传入了两个参数.
+
+2) 这两个参数值不是普通的字符串对象,而是一个view对象.
+
+也就是说,我们把view对象,当作了一个参数的值.
+
+3) 在method_splitter()方法里,设置了两个默认参数,进行if判断.
+
+4) 通过参数名(代表一个view对象:sendMailViewByForms.py里的一个函数),调用相应的get/post视图函数
+
+5) 在两个独立的视图函数里分别编写post和get请求时,具体要做的内容.
+
+(PS,虽然显示了thanks界面,但是没有收到邮件,还以为是哪里出错了,看来一集看是回来,收到了好几封邮件.冏.)
+
+----
