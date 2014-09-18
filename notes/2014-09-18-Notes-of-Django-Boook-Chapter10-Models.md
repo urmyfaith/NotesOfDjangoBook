@@ -51,3 +51,31 @@ u'http://www.oreilly.com/'
 
 > **book_set 只是一个 QuerySet**
 
+---
+## 访问多对多(Many-to-Many Values)
+
+直接使用 b.author.all()
+
+或者使用filter对结果筛选:
+
+```python
+>>> b=Book.objects.get(id=2)
+>>> b.author.all()
+[<Author: Tom Acer>]
+>>> b.author.filter(first_name='Tom')
+[<Author: Tom Acer>]
+>>> b.author.filter(first_name='cat')
+[]
+>>>
+```
+反查询:
+```python
+>>> a = Author.objects.get(first_name='Tom')
+>>> print a
+Tom Acer
+>>> type(a)
+<class 'books.models.Author'>
+>>> a.book_set.all()
+[<Book: Book object>, <Book: Book object>]
+>>>
+```
