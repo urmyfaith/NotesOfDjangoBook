@@ -17,3 +17,37 @@ u'A History of the Classical Greek World'
 datetime.date(2014, 9, 14)
 ```
 
+## 访问外键(Foreign Key)
+
+```python
+# books.models.py
+class Book(models.Model):
+    title = models.CharField(max_length=100)
+    author = models.ManyToManyField(Author)
+    publisher = models.ForeignKey(Publisher)
+    publication_date = models.DateField(blank=True, null=True)
+    
+    def __unicode(self):
+        return self.title
+```
+可以看到publisher设置了一个外键,是一个Publisher对象.
+```python
+>>> b = Book.objects.get(id=2)
+>>> b.publisher
+<Publisher: O'Reilly>
+>>> b.publisher.website
+u'http://www.oreilly.com/'
+```
+> 注意到,用b.publisher.website访问了Publisher对象的字段.
+
+从ForeignKey的另外一面访问:
+```python
+>>> p = Publisher.objects.get(name="O'Reilly")
+>>> p.book_set.all()
+[<Book: Book object>]
+>>> p.book_set.filter(title__icontains='world')
+[<Book: Book object>]
+```
+
+> **book_set 只是一个 QuerySet**
+
