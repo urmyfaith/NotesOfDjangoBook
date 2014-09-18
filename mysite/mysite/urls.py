@@ -3,6 +3,7 @@ from django.contrib import admin
 from books.models import Book
 from blog.models import blog
 from mysite import sendMailViewByForms
+from mysite import articlesViews
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
@@ -52,3 +53,11 @@ urlpatterns += patterns('mysite.blogPageView',
     url(r'^chapter8_url_view/use_default_view_arguments/blog/$','show_blog_page'),
     url(r'^chapter8_url_view/use_default_view_arguments/blog/page(?P<num>\d+)/$','show_blog_page'),
 )
+
+urlpatterns += patterns('',
+    (r'^chapter8_requires_login/articles/(?P<year>\d{4})/$', articlesViews.year_archive),
+    (r'^chapter8_requires_login/articles/(?P<year>\d{4})/(?P<month>\d{2})/$',articlesViews.month_archive),
+
+)
+
+

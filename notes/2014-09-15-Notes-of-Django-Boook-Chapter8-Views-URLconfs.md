@@ -627,4 +627,28 @@ None
 传入的后面带有关键字的参数,进入了**kwargs
 
 ---
+## 每个页面的认证
+
+每个页面都要做认证,那么怎么实现呢?
+
+例如:下面的这两个页面需要认证才能显示:
+```python
+#urls.py
+urlpatterns += patterns('',
+    (r'^chapter8_requires_login/articles/(?P<year>\d{4})/$', articlesViews.year_archive),
+    (r'^chapter8_requires_login/articles/(?P<year>\d{4})/(?P<month>\d{2})/$',articlesViews.month_archive),
+
+)
+# articlesViews.py
+from django.http import HttpResponse
+
+def year_archive(request,year):
+    rawHtml='<html><head></head><body>year_archive:%s</body></html>'% year
+    return HttpResponse(rawHtml)
+def month_archive(request,month,year):
+    rawHtml='<html><head></head><body>month_archive:%s-%s</body></html>'% (year,month)
+    return HttpResponse(rawHtml)
+```
+
+
 
