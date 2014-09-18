@@ -627,7 +627,7 @@ None
 传入的后面带有关键字的参数,进入了**kwargs
 
 ---
-## 每个页面的认证
+## 每个页面的认证:封装视图函数
 
 每个页面都要做认证,那么怎么实现呢?
 
@@ -649,6 +649,37 @@ def month_archive(request,month,year):
     rawHtml='<html><head></head><body>month_archive:%s-%s</body></html>'% (year,month)
     return HttpResponse(rawHtml)
 ```
+
+那么怎么样才能实现每一个页面都认证呢?
+
+```python
+#urls.py
+urlpatterns += patterns('',
+    (r'^chapter8_requires_login/articles/(?P<year>\d{4})/$',requires_login(articlesViews.year_archive) ),
+    (r'^chapter8_requires_login/articles/(?P<year>\d{4})/(?P<month>\d{2})/$',requires_login(articlesViews.month_archive)),
+)
+#dologin.py
+def requires_login(view):
+    def logined_view(request,*args,**kwargs):
+        if not request.user.is_authenticated():
+            return HttpResponseRedirect('/accounts/login/')
+        return view(request,*args,**kwargs)
+    return loginde_view
+```
+
+> 可以看到:
+
+1.具体的认证在requires_login()里实现的.
+
+2) 注意:**requires_login()传入一个视图函数,返回的也是一个视图函数**
+
+一般的视图函数,像上面的year_archive(),month_archive(),传入的是request请求和参数,返回的是一个http响应.
+
+3) 在urls.py里,不是直接调用处理URL的视图函数,而是先把这个视图函数,
+
+传入requires_login()处理,返回一个新的视图函数,用它来最终显示页面.
+
+4) **这个视图函数,传入requires_login()处理,返回一个新的视图函数,**的这个封装,叫做"**包装视图函数**"
 
 
 
