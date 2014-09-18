@@ -682,4 +682,28 @@ def requires_login(view):
 4) **这个视图函数,传入requires_login()处理,返回一个新的视图函数,**的这个封装,叫做"**包装视图函数**"
 
 
+----
+## Include的用法:
+```python
+from django.conf.urls.defaults import *
+urlpatterns = patterns('',
+    (r'^weblog/', include('mysite.blog.urls')),
+    (r'^photos/', include('mysite.photos.urls')),
+    (r'^about/$', 'mysite.views.about'),
+    (r'^(?P<username>\w+)/blog/', include('foo.urls.blog')),
+     (r'^blog/', include('inner'), {'blogid': 3}),
+)
+```
+
+> 1) include用来包含其他APP下urls.py文件.
+
+> 2) include的patterns里,前面没有$
+
+> 3) 如果遇到命名组参数,命名组参数将会传到include的app里urls.py的每一个URL匹配.
+
+> **如果包含的urls.py里的匹配不要此参数,就会报错.**
+
+> 4)  如果遇到额外的字典参数,此参数也会传到includedapp里urls.py的每一个URL匹配.
+
+>  和命名组参数一样.**如果包含的urls.py里的匹配不要此参数,就会报错.**
 
