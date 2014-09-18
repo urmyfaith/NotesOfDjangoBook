@@ -79,3 +79,9 @@ Tom Acer
 [<Book: Book object>, <Book: Book object>]
 >>>
 ```
+> 这里,就像使用 ForeignKey字段一样，
+
+> 属性名book_set是在数据模型(model)名后追加_set。
+
+![Book_Author_Publisher.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/Book_Author_Publisher.png)
+
