@@ -85,3 +85,18 @@ Tom Acer
 
 ![Book_Author_Publisher.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/Book_Author_Publisher.png)
 
+
+----
+## 添加字段
+
+1) 在models.py添加字段:
+```python
+class Book(models.Model):
+    ...
+    num_pages = models.IntegerField(blank=True, null=True)
+```
+2) 执行 python manager.py makemigrations
+
+3) 执行python manager.py migrate
+
+----
