@@ -112,3 +112,49 @@ class Book(models.Model):
 
 > 可以创建自定义manager以定制数据库访问
 
+## 增加额外的Manager方法
+
+为什么要增加Manager方法?
+
+*  增加额外的manager方法，
+*  修改manager返回的初始QuerySet
+
+```python
+# /mysite/books/models.py
+
+class BookManager(models.Manager):
+    def title_count(self,keyword):
+        return self.filter(title__icontains=keyword).count()
+    
+class Book(models.Model):
+    title = models.CharField(max_length=100)
+    author = models.ManyToManyField(Author)
+    publisher = models.ForeignKey(Publisher)
+    publication_date = models.DateField(blank=True, null=True)
+    num_pages = models.IntegerField(blank=True, null=True)
+    objects=BookManager()    
+    
+    def __unicode(self):
+        return self.title
+```
+可以看到:
+
+1) 我们定义了一个新的类"BookManager",其中包含一个方法"title_count".
+
+2) 在title_count()方法里,使用了self,这self指的是Manager对象本身.
+
+在方法里,通过数据库筛选,返回了包含关键字的结果集的数量.
+
+3) 在Book类里,我们将上面定义的BookManager类,赋值给了***objects***变量.
+
+这样,我们就可以通过bojects来访问title_count()方法了:
+
+```python
+..\NotesOfDjangoBook\mysite>python manage.py shell
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from books.models import *
+>>> Book.objects.title_count('the')
+1
+>>>
+```
