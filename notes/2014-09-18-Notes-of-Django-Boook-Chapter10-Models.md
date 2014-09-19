@@ -1,5 +1,14 @@
 #Chapter10-models
 
+
+* 访问多对多(Many-to-Many Values)
+* 添加字段
+* Managers
+* 修改初始Manager QuerySets
+* 模型方法
+* 访问数据库:
+* 将数据库操作放在自定义models或者manager中...
+
 ## book model
 
 ![books_model_view.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/books_model_view.png)
