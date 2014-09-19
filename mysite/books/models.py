@@ -22,6 +22,10 @@ class Author(models.Model):
     #headshot = models.ImageField(upload_to='/tmp')
     def __unicode__(self):
         return u'%s %s' % (self.first_name,self.last_name)
+    def _get_full_name(self):
+        "Returns the Author's full name."
+        return u'%s %s' % (self.first_name, self.last_name)
+    full_name=property(_get_full_name)
     
 class BookManager(models.Manager):
     def title_count(self,keyword):

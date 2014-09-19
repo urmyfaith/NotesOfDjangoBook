@@ -197,5 +197,29 @@ class Book(models.Model):
 ```
 
 -----
+## 模型方法
+
+> 可以给model添加一些方法,例如:
+
+```python
+# /mysite/books/models.py
+class Author(models.Model):
+    first_name   =    models.CharField(max_length=30)
+    last_name   =   models.CharField(max_length=40)
+    email =models.EmailField(blank=True,verbose_name='e-mail')
+    def _get_full_name(self):
+        "Returns the Author's full name."
+        return u'%s %s' % (self.first_name, self.last_name)
+    full_name=property(_get_full_name)
+ 
+>>> from books.models import *
+>>> a = Author.objects.get(email="autumn528@gmail.com")
+>>> a.full_name
+u'Tom Acer'
+>>>
+```
+---
+
+
 
 
