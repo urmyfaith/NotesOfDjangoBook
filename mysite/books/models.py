@@ -1,6 +1,6 @@
 # _*_ coding: utf-8 _*_
 
-from django.db import models
+from django.db import models,connection
 
 # Create your models here.
 class Publisher(models.Model):
@@ -13,6 +13,14 @@ class Publisher(models.Model):
     
     def __unicode__(self):
         return self.name
+class  AuthorManager(models.Manager):
+    def first_names(self,last_name):
+        cursor = connection.cursor()
+        cursor.execute('''
+                SELECT DISTINCT first_name
+                FROM books_author
+                WHERE last_name=%s''',[last_name])
+        return [row[0] for row in cursor.fetchone()]
 
 class Author(models.Model):
     #salutation = models.CharField(maxlength=10)
@@ -26,6 +34,8 @@ class Author(models.Model):
         "Returns the Author's full name."
         return u'%s %s' % (self.first_name, self.last_name)
     full_name=property(_get_full_name)
+    objects=models.Manager()
+    m_objects=AuthorManager()
     
 class BookManager(models.Manager):
     def title_count(self,keyword):

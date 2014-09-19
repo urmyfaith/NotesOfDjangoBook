@@ -219,7 +219,78 @@ u'Tom Acer'
 >>>
 ```
 ---
+## 访问数据库:
+
+1)导入 djangod.db.connection
+
+2)从连接获取游标
+
+3) 执行sql语句,得到结果集.
+
+4) 处理结果集(得到一行,打印输出.)
+```python
+>>> from django.db import connection
+>>> c = connection.cursor()
+>>> c.execute('''
+... select distinct first_name
+... from books_author
+... where last_name=%s''',['Acer'])
+<django.db.backends.sqlite3.base.SQLiteCursorWrapper object at 0x029246B8>
+>>> row = c.fetchone()
+>>> print row
+(u'Tom',)
+>>>
+```
 
 
+### 将数据库操作放在自定义models或者manager中...
+
+```python
+# /mysite/books/models.py
+class  AuthorManager(models.Manager):
+    def first_names(self,last_name):
+        cursor = connection.cursor()
+        cursor.execute('''
+                SELECT DISTINCT first_name
+                FROM books_author
+                WHERE last_name=%s''',[last_name])
+        return [row[0] for row in cursor.fetchone()]
+
+class Author(models.Model):
+    first_name   =    models.CharField(max_length=30)
+    last_name   =   models.CharField(max_length=40)
+    email =models.EmailField(blank=True,verbose_name='email')
+    def __unicode__(self):
+        return u'%s %s' % (self.first_name,self.last_name)
+    def _get_full_name(self):
+        "Returns the Author's full name."
+        return u'%s %s' % (self.first_name, self.last_name)
+    full_name=property(_get_full_name)
+    objects=models.Manager()
+    m_objects=AuthorManager()
+```
+> 让我们看看上面的代码:
+
+1) 又定义了一个新的Manager类,在里面包含了一个方法first_names(),
+
+用于根据last_name查询数据库,返回一个first_name.
+
+2) 注意:在查询语句里,我们使用的是参数,而不是直接把last_name包含进去.这里会有一个转义.
+
+3) 在Author类里面,有两个Manager.
+
+一个是默认的,我们给予了明确的指定:" objects=models.Manager()"
+
+第二个是新建的,命名为m_objects.
+
+4) 下面是如何使用的示例:
+
+```python
+ (InteractiveConsole)
+>>> from books.models import *
+>>> Author.m_objects.first_names('Acer')
+[u'T']
+       
+```
 
 
