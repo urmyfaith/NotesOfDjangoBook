@@ -139,7 +139,7 @@ class Book(models.Model):
 ```
 可以看到:
 
-1) 我们定义了一个新的类"BookManager",其中包含一个方法"title_count".
+1) 我们定义了一个新的类"BookManager",类的参数是:"**models.Manager**"其中包含一个方法"title_count".
 
 2) 在title_count()方法里,使用了self,这self指的是Manager对象本身.
 
@@ -158,3 +158,6 @@ Type "help", "copyright", "credits" or "license" for more information.
 1
 >>>
 ```
+4 ) 注意,上面两个类的先后顺序:先定义BookManager类,然后是在Book类中使用.
+
+---
