@@ -26,14 +26,18 @@ class Author(models.Model):
 class BookManager(models.Manager):
     def title_count(self,keyword):
         return self.filter(title__icontains=keyword).count()
-    
+class OneBookManager(models.Manager):
+    def get_query_set(self):
+        return super(OneBookManager,self).get_query_set().filter(title__icontains='the')
+        #return self.get_query_set().filter(title__icontains='the')
 class Book(models.Model):
     title = models.CharField(max_length=100)
     author = models.ManyToManyField(Author)
     publisher = models.ForeignKey(Publisher)
     publication_date = models.DateField(blank=True, null=True)
     num_pages = models.IntegerField(blank=True, null=True)
-    objects=BookManager()    
+    objects=models.Manager()
+    oneBook_objects=OneBookManager()
     
     def __unicode(self):
         return self.title

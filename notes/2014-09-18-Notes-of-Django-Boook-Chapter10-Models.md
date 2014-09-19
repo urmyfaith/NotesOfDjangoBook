@@ -161,3 +161,41 @@ Type "help", "copyright", "credits" or "license" for more information.
 4 ) 注意,上面两个类的先后顺序:先定义BookManager类,然后是在Book类中使用.
 
 ---
+## 修改初始Manager QuerySets
+
+> 我们可以通过覆盖Manager.get_query_set()方法来重写manager的基本QuerySet。 
+
+```python
+# /mysite/books/models.py
+class BookManager(models.Manager):
+    def title_count(self,keyword):
+        return self.filter(title__icontains=keyword).count()
+class OneBookManager(models.Manager):
+    def get_query_set(self):
+        return super(OneBookManager,self).get_query_set().filter(title__icontains='the')
+        #return self.get_query_set().filter(title__icontains='the')
+class Book(models.Model):
+    ...
+    objects=models.Manager()
+    oneBook_objects=OneBookManager()
+    ...
+```
+可以看到,上面有两个Manager类,其中一个赋值给了默认的objects,另外一个赋值给了oneBook_objects.
+
+那么在使用的时候,就有两个Manager对象(objects,oneBook_objects)可用:
+```python
+>>> from books.models import *
+>>> Book.oneBook_objects.all()
+[<Book: Book object>]
+>>> Book.oneBook_objects.filter(title__contains='the')
+[<Book: Book object>]
+>>> Book.oneBook_objects.count()
+1
+>>> Book.objects.all()
+[<Book: Book object>, <Book: Book object>]
+>>>
+```
+
+-----
+
+
