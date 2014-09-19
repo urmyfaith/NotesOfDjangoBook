@@ -100,3 +100,15 @@ class Book(models.Model):
 3) 执行python manager.py migrate
 
 ----
+## Managers
+
+> 在语句Book.objects.all()中，objects是一个特殊的属性，需要通过它查询数据库。
+
+> 模块manager是一个对象，
+
+>  Django模块通过它进行数据库查询。 
+
+> 每个Django模块至少有一个manager
+
+> 可以创建自定义manager以定制数据库访问
+
