@@ -7,6 +7,7 @@ from mysite import articlesViews
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^books/', include('books.urls')),
 )
 
 ##urlpatterns += patterns('mysite.sendMailViewByForms',
