@@ -1,0 +1,18 @@
+{% block content %}
+    <h2>Publishers</h2>
+		<table>
+			  {% for publisher in publisher_list %}
+			<tr>
+				<td>{{ publisher.name }}</td>
+				<td>{{ publisher.address }}<</td>
+				<td>{{ publisher.city }}</td>
+				<td>{{ publisher.state_province }}</td>
+			</tr>	
+        {% endfor %}
+		</table>
+
+		 {% for book in book_list %}
+            <li>{{ book.title }}</li>
+        {% endfor %}
+
+{% endblock %}

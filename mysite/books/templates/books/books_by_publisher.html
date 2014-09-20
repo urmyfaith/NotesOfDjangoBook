@@ -1,0 +1,38 @@
+{% block content %}
+    <h2>Publishers({{ publisher.name}}) info:</h2>
+	<table width="800" border="0" bgcolor="blue" bordercolor="black" cellpadding="5" cellspacing="1">
+	<tr bgcolor="white">
+		<td>name</td>
+		<td>address</td>
+		<td>city</td>
+		<td>state_province</td>
+		<td>country</td>
+		<td>website</td>
+	</tr>
+	<tr bgcolor="white">
+		<td>{{ publisher.name }}	</td>
+		<td>{{ publisher.address }}	</td>
+		<td>{{ publisher.city }}	</td>
+		<td>{{ publisher.state_province }}	</td>
+		<td>{{ publisher.country }}</td>
+		<td>{{ publisher.website }}</td>
+	</tr>
+	</table>
+	<p>
+	<h2>Publishers({{ publisher.name }})'s Books are:</h2>
+    <table width="800" border="0" bgcolor="blue" bordercolor="black" cellpadding="5" cellspacing="1">
+	
+	   {% for book in book_list %}
+		<tr bgcolor="white">
+		<td>  {{ book.title }}</td>
+		<td> {{ book.publisher }}</td>
+		<td> {{ book.publication_date }}</td>
+		<td> {{ book.num_pages }}</td>
+		</tr>
+	 {% endfor %}
+    </table>
+     
+          
+       
+ 
+{% endblock %}

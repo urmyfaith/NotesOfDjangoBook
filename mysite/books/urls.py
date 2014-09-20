@@ -1,6 +1,6 @@
 from django.conf.urls import *
-from books.views import PublisherList
+from books.views import PublisherBookList
 
 urlpatterns = patterns('books.views',
-    url(r'^publishers/$',PublisherList.as_view()),
+    url(r'^publishers/([\w-]+)/$',PublisherBookList.as_view()),
 )
