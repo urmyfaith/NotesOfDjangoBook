@@ -178,4 +178,84 @@ c) 重写了get_context_data()方法,通过这个方法,添加额外的数据.
 渲染效果如下:
 ![publisher_books_filter.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/publisher_books_filter.png)
 
+-----
+## 获取和保存用户上次访问时间.
 
+1)首先,设计字段
+
+2) 配置url
+
+3) 编写view
+
+4) 编写模版渲染
+
+```python
+
+#books/modles.py
+class Author(models.Model):
+     ...
+    last_accessed = models.DateTimeField(blank=True, null=True)
+
+# books/urls.py
+from books.views import PublisherBookList,AuthorDetailView
+
+urlpatterns = patterns('books.views',
+    url(r'^publishers/([\w-]+)/$',PublisherBookList.as_view()),
+    url(r'^authors/(?P<pk>\d+)/$',AuthorDetailView.as_view()),
+)
+
+#books/views.py
+from django.utils import timezone
+class AuthorDetailView(DetailView):
+    queryset=Author.objects.all()
+    def get_object(self):      
+        mobject = super(AuthorDetailView,self).get_object()
+        mobject.last_accessed=timezone.now()
+        mobject.save() 
+        return mobject 
+    def get_context_data(self,*args,**kwargs):
+        context=super(AuthorDetailView,self).get_context_data(*args,**kwargs)
+        mm_object=get_object_or_404(Author,id=self.kwargs['pk'])
+        m_object = super(AuthorDetailView,self).get_object()
+        context['author']=m_object
+        print context
+        return context
+```
+
+> 分析下上面的代码:
+
+1) 设计字段,没什么好说的,时间类型
+
+2) URLconf里,使用通用视图,带一个命名组pk参数(关键字参数).
+
+3) 在视图里,
+
+a)重写了get_object方法,得到对象,修改值,保存.
+
+b)重写了get_ontext_data方法,传入模版里需要的参数.
+
+**这里有两个方法得到对象**
+
+第一个:使用get_object()方法
+```python
+mobject = super(AuthorDetailView,self).get_object()
+```
+第二个:使用get_object_or_404()方法
+```python
+ mm_object=get_object_or_404(Author,id=self.kwargs['pk'])
+```
+可以看到,第一个方法,没有传入筛选条件,而第二个传入了.
+
+最后,是模版文件:
+```python
+# mysite\books\templates\books\author_detail.html
+{% block content %}
+
+	User "<strong>{{ author.full_name }}</strong>" last  accessed time is <em>{{ author.last_accessed }}</em>.
+
+{% endblock %}
+```
+渲染效果如下:
+
+![generic_view_last_access_time.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/generic_view_last_access_time.png)
+-----
