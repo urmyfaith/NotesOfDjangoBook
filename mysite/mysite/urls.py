@@ -60,4 +60,9 @@ urlpatterns += patterns('',
 
 )
 
+from django.views.generic import TemplateView
+urlpatterns += patterns('',
+    url(r'^chapter11_generic_view/about/$', TemplateView.as_view(template_name="about.html")),
+)
+
 
