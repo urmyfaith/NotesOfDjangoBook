@@ -113,7 +113,7 @@ print "x2_list=",x2_list    #x2_list= [1, 2, 3]
 print "type(x2_list)=",type(x2_list)    #type(x2_list)= <type 'list'>
 ```
 ---
-## 输出生成 CSV 文件-part23
+## 输出生成 CSV 文件-part3
 
 如果要输出的csv文件很大,可以使用**StreamingHttpResponse**来代替HttpResponse
 
@@ -237,6 +237,7 @@ def show_xls(request):
 
 * 教程: https://github.com/python-excel/tutorial
 
+----
 
 
 
