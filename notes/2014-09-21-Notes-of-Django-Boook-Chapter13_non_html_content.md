@@ -304,6 +304,7 @@ response['Content-Disposition'] = 'attachment; filename="show_pdf.pdf"'
 
 > 最后需要对 PDF 文件调用 showPage() 和 save() 方法（否则你会得到一个损坏的 PDF 文件）。
 
+----
 
 ## 输出PDF文件-使用StringIO()
 
@@ -335,6 +336,19 @@ def show_pdf_StringIO(request):
 而是在最后使用response.write(temp.getvalue())
 
 
+> **更多**使用reportlab 生成PDF文档的一个例子:
 
+http://blog.sina.com.cn/s/blog_6b1ed4fb0101d86f.html
+
+----
+
+
+## 输出其他类型的文件的讨论 ,zip,图片,图表
+
+* zip文件 Python 标准库中包含有 zipfile 模块，它可以读和写压缩的 ZIP 文件。
+
+* Python 图片处理库PIL,它可以用于自动为图片生成缩略图
+
+* matplotlib 可以用于生成通常是由 matlab 或者 Mathematica 生成的高质量图表。
 
 
