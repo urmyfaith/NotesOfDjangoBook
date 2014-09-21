@@ -73,7 +73,18 @@ def show_xls(request):
     
     wb.save(response)
     
-    return response  
-    
-    
-    
+    return response
+
+
+from reportlab.pdfgen import canvas    
+def show_pdf(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="show_pdf.pdf"'
+
+    #create PDF
+    p = canvas.Canvas(response)
+    p.drawString(300,500,"output PDF in Django by reportlab")
+    p.showPage()
+    p.save()
+    return response
+

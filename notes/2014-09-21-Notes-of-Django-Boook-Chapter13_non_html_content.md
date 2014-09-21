@@ -238,6 +238,71 @@ def show_xls(request):
 * 教程: https://github.com/python-excel/tutorial
 
 ----
+## 输出生成 PDF文件
+
+输出生成PDF文件的时候,需要使用reportlab库,找了好半天,发现也没有什么好选择的.
+
+### 安装reportlab
+
+* reportlab下载地址:https://bitbucket.org/rptlab/reportlab/downloads
+
+* reportlab安装出现错误:http://my.oschina.net/zhangdapeng89/blog/54407
+> 解决“Unable to find vcvarsall.bat”错误
+
+* 安装minGW或者VS2008(+)
+
+下面就是使用reportlab输出PDF文件.
+```python
+#mysite/urls.py
+urlpatterns += patterns('mysite.show_non_html_content',
+    ...
+    url(r'^chapter13/show_pdf/$','show_pdf'),
+)
+
+# mysite/show_non_html_content.py
+from reportlab.pdfgen import canvas    
+def show_pdf(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="show_pdf.pdf"'
+
+    p = canvas.Canvas(response)
+    p.drawString(100,100,"output PDF in Django by reportlab")
+    p.showPage()
+    p.save()
+    return response
+
+```
+> 上面的代码很少,但是每一句都很有用.
+
+0) 导入包:
+```python
+from reportlab.pdfgen import canvas
+```
+
+1) 生成HttpResponse对象,通知浏览器文件类型,注意是"**application/pdf**"而不是"**text/pdf**"
+```python
+response = HttpResponse(content_type='application/pdf')
+```
+2) 通知浏览器保存文件的名称:
+```python
+response['Content-Disposition'] = 'attachment; filename="show_pdf.pdf"'
+```
+3) 生成PDF文件,注意,canvas.Canvas(response)传入的参数是response,即为HttpResponse对象.
+
+```python
+    p = canvas.Canvas(response)
+    p.drawString(100,100,"output PDF in Django by reportlab")
+    p.showPage()
+    p.save()
+```
+
+> 这里我们使用的 MIME 类型是 application/pdf 。这会告诉浏览器这个文档是一个 PDF 文档，而不是 HTML 文档。 如果忽略了这个参数，浏览器可能会把这个文件看成 HTML 文档，这会使浏览器的窗口中出现很奇怪的文字。 If you leave off this information, browsers will probably interpret the response as HTML, which will result in scary gobbledygook in the browser window.
+
+> 使用 ReportLab 的 API 很简单： 只需要将 response 对象作为 canvas.Canvas 的第一个参数传入。
+
+> 所有后续的 PDF 生成方法需要由 PDF 对象调用（在本例中是 p ），而不是 response 对象。
+
+> 最后需要对 PDF 文件调用 showPage() 和 save() 方法（否则你会得到一个损坏的 PDF 文件）。
 
 
 
