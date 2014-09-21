@@ -112,6 +112,59 @@ x2_list=list(x2)
 print "x2_list=",x2_list    #x2_list= [1, 2, 3]
 print "type(x2_list)=",type(x2_list)    #type(x2_list)= <type 'list'>
 ```
+---
+## 输出生成 CSV 文件-part23
+
+如果要输出的csv文件很大,可以使用**StreamingHttpResponse**来代替HttpResponse
+
+```python
+# mysite/urls.py
+url(r'^chapter13/show_csv3/$','some_streaming_csv_view'),
+
+# mysite/show_non_html_content.py 
+class Echo(object):
+    """An object that implements just the write method of the file-like
+    interface.
+    """
+    def write(self, value):
+        """Write the value by returning it, instead of storing in a buffer."""
+        return value
+
+from django.utils.six.moves import range
+from django.http import StreamingHttpResponse
+def some_streaming_csv_view(request):
+    """A view that streams a large CSV file."""
+    # Generate a sequence of rows. The range is based on the maximum number of
+    # rows that can be handled by a single sheet in most spreadsheet
+    # applications.
+    rows = (["Row {0}".format(idx), str(idx)] for idx in range(65536))
+    pseudo_buffer = Echo()
+    writer = csv.writer(pseudo_buffer)
+    response = StreamingHttpResponse((writer.writerow(row) for row in rows),
+                                     content_type="text/csv")
+    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+    return response
+```
+
+在视图中,使用StreamingHttpResponse的方法:
+
+1) 准备数据
+> rows = (["Row {0}".format(idx), str(idx)] for idx in range(65536))
+
+2) csv的writer对象,重写write方法,直接返回值,而不是存储在缓冲里.
+> pseudo_buffer = Echo()
+
+> writer = csv.writer(pseudo_buffer)
+
+3) 使用上面的数据作为参数,生成StreamingHttpResponse对象实例
+>response = StreamingHttpResponse((writer.writerow(row) for row in rows),content_type="text/csv")
+
+4) 通知浏览器文件类型
+> response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+
+5) 返回StreamingHttpResponse对象.
+
+----
 
 
 
