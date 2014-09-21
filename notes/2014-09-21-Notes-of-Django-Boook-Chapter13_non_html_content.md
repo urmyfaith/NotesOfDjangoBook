@@ -28,3 +28,41 @@ def show_images(request,filename):
 
 ![show_images.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/show_images.png)
 -----
+## 输出生成 CSV 文件-part1
+
+输出csv文件的时候,也是要通知浏览器,这是一个csv文件
+
+```python
+# myste/urls.py
+urlpatterns += patterns('mysite.show_non_html_content',
+   ...
+    url(r'^chapter13/show_csv/$','show_csv'),
+)
+
+# mysite/show_non_html_content.py 
+import csv
+def show_csv(request):
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="show_csv.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['First row', "hello"])
+    writer.writerow(['Second row', 'A',"Testing"', "Here's a quote"])
+    return response
+```
+需要注意的是在show_csv()视图里的:
+
+1) 通浏览器返回是csv文件,同时生成HttpResponse对象
+
+2) 向对象里写入csv文件的内容.
+
+3) 返回对象.
+
+![show_csv.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/show_csv.png)
+
+![show_csv_content.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/show_csv_content.png)
+
+---
+
+
