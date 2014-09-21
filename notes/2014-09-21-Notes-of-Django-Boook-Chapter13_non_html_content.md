@@ -65,4 +65,54 @@ def show_csv(request):
 
 ---
 
+## 输出生成 CSV 文件-part2
+
+这里,输出的csv文件,每一行都有相同的列数:
+```python
+# myste/urls.py
+url(r'^chapter13/show_csv2/$','show_csv2'),
+
+# mysite/show_non_html_content.py 
+UNRULY_PASSENGERS = [146,184,235,200,226,251,299,273,281,304,203]
+def show_csv2(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=show_csv.csv'
+    writer = csv.writer(response)
+    writer.writerow(['Year', 'Unruly Airline Passengers'])
+   #for (year, num) in zip(range(1995, 2006), UNRULY_PASSENGERS):
+        #writer.writerow([year, num])
+        #print [year,num]
+    for row in zip(range(1995, 2006), UNRULY_PASSENGERS):
+        #(1995,146)==>[1995,146]
+       writer.writerow(list(row))
+    return response
+```
+这里,写入的是一个list,[year,num],即[(1995, 146), (1996, 184),...]
+也可以使用list(row)方法,将(1995, 146)格式变换为==>[1995, 146]
+
+### zip,list方法
+
+tuple和list的转换
+
+```python
+# zip_list_method.py
+x=[1,2,3]
+print "type(x)=",type(x)    #type(x)= <type 'list'>
+y=[4,5,6]
+
+zipped=zip(x,y)
+print "zippped=",zipped     #zippped= [(1, 4), (2, 5), (3, 6)]
+print "type(zipped)=",type(zipped)  #type(zipped)= <type 'list'>
+
+x2,y2=zip(*zipped)
+print "x2=",x2,"\ty2=",     #x2= (1, 2, 3) 	y2= (4, 5, 6)
+print "type(x2)=",type(x2)  #type(x2)= <type 'tuple'>
+
+x2_list=list(x2)
+print "x2_list=",x2_list    #x2_list= [1, 2, 3]
+print "type(x2_list)=",type(x2_list)    #type(x2_list)= <type 'list'>
+```
+
+
+
 

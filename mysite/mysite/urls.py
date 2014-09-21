@@ -70,5 +70,6 @@ urlpatterns += patterns('',
 urlpatterns += patterns('mysite.show_non_html_content',
     url(r'^chapter13/show_images/(?P<filename>[\w-]+).png/$','show_images'),
     url(r'^chapter13/show_csv/$','show_csv'),
+    url(r'^chapter13/show_csv2/$','show_csv2'),
 )
 
