@@ -167,5 +167,76 @@ def some_streaming_csv_view(request):
 ----
 
 
+## 输出生成 XLS文件
+
+在 https://docs.djangoproject.com/en/1.7/howto/outputting-csv/ 里有这样的一段话:
+>Notice that there isn’t very much specific to CSV here – just the specific output format. You can use either of these techniques to output any text-based format you can dream of. You can also use a similar technique to generate arbitrary binary data;
+
+意思是说,可以用类似生成csv文件的方法,来生成其他的文本类型的文件.
+
+所以,这里,生成了xls文件(excle).
+
+1) 配置URLconf
+
+```python
+#urls.py
+
+url(r'^chapter13/show_xls/$','show_xls'),
+```
+2) 设置响应类型,**生成HttpResponse实例对象.**
+> response=HttpResponse(content_type='text/xls')
+
+3) 通知浏览器保存的文件名称
+
+> response['Content-Disposition'] = 'attachment; filename="show_xls.xls"'
+
+4) 将xls文件写入HttpResponse实例对象
+>  wb.save(response)
+
+5) 返回HttpResponse实例对象.
+
+下面是完整的过程:
+
+```python
+
+# mysite/show_non_html_content.py 
+
+import xlwt
+from datetime import datetime
+def show_xls(request):
+    response=HttpResponse(content_type='text/xls')
+    response['Content-Disposition'] = 'attachment; filename="show_xls.xls"'
+    
+    style0 = xlwt.easyxf('font: name Times New Roman, color-index red, bold on',
+            num_format_str='#,##0.00')
+    style1 = xlwt.easyxf(num_format_str='D-MMM-YY')
+    wb = xlwt.Workbook()
+    ws = wb.add_sheet('A Test Sheet')
+    ws.write(0, 0, 1234.56, style0)     #num
+    ws.write(1, 0, datetime.now(), style1)  #time
+    ws.write(2, 0, 1)
+    ws.write(2, 1, 1)
+    ws.write(2, 2, xlwt.Formula("$A3+$B3"))   #Formula
+    
+    wb.save(response)
+    
+    return response 
+```
+
+其中,生成xls文件内容的时候,使用的是python-excel的xlwt模块中自带的例子.
+
+## 关于生成xls的资料
+
+* 读取excle文件的模块: https://pypi.python.org/pypi/xlrd
+
+* 写入excle文件的模块: https://pypi.python.org/pypi/xlwt
+
+* Github主页:    https://github.com/python-excel/
+
+* 教程: python-excel.pdf  http://www.simplistix.co.uk/presentations/python-excel.pdf
+
+* 教程: https://github.com/python-excel/tutorial
+
+
 
 
