@@ -159,7 +159,7 @@ def some_streaming_csv_view(request):
 3) 使用上面的数据作为参数,生成StreamingHttpResponse对象实例
 >response = StreamingHttpResponse((writer.writerow(row) for row in rows),content_type="text/csv")
 
-4) 通知浏览器文件类型
+4) 通知浏览器,文件保存的名称
 > response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
 
 5) 返回StreamingHttpResponse对象.
