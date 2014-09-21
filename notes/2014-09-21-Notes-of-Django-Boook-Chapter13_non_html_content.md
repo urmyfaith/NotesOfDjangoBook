@@ -1,5 +1,18 @@
 # Chapter13_non_html_content
 
+* 输出一张图片
+* 输出生成 CSV 文件-part1
+* 输出生成 CSV 文件-part2
+* zip,list方法
+* 输出生成 CSV 文件-part3
+* 输出生成 XLS文件
+* 关于生成xls的资料
+* 输出生成 PDF文件
+* 安装reportlab
+* 输出PDF文件-使用StringIO()
+* 输出其他类型的文件的讨论 ,zip,图片,图表
+
+
 ## 输出一张图片
 
 **需求:**通过输入图片的文件名称,显示一张图片
