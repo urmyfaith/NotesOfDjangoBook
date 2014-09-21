@@ -88,3 +88,18 @@ def show_pdf(request):
     p.save()
     return response
 
+from cStringIO import StringIO
+def show_pdf_StringIO(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="show_pdf_StringIO.pdf"'
+
+    temp=StringIO()
+    print type(temp)
+
+    p=canvas.Canvas(temp)
+    p.drawString(250,500,"create pdf by reportelab,StringIO()")
+    p.showPage()
+    p.save()
+    response.write(temp.getvalue())
+    return response
+

@@ -74,5 +74,6 @@ urlpatterns += patterns('mysite.show_non_html_content',
     url(r'^chapter13/show_csv3/$','some_streaming_csv_view'),
     url(r'^chapter13/show_xls/$','show_xls'),
     url(r'^chapter13/show_pdf/$','show_pdf'),
+    url(r'^chapter13/show_pdf_StringIO/$','show_pdf_StringIO'),
 )
 

@@ -305,4 +305,36 @@ response['Content-Disposition'] = 'attachment; filename="show_pdf.pdf"'
 > 最后需要对 PDF 文件调用 showPage() 和 save() 方法（否则你会得到一个损坏的 PDF 文件）。
 
 
+## 输出PDF文件-使用StringIO()
+
+```python
+#mysite/urls.py
+urlpatterns += patterns('mysite.show_non_html_content',
+    ...
+    url(r'^chapter13/show_pdf_StringIO/$','show_pdf_StringIO'),
+)
+
+# mysite/show_non_html_content.py
+from cStringIO import StringIO
+def show_pdf_StringIO(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="show_pdf_StringIO.pdf"'
+
+    temp=StringIO()
+    print type(temp)
+
+    p=canvas.Canvas(temp)
+    p.drawString(250,500,"create pdf by reportelab,StringIO()")
+    p.showPage()
+    p.save()
+    response.write(temp.getvalue())
+    return response
+```
+上面的视图中,生成PDF,不是在生成对象的时候,
+
+而是在最后使用response.write(temp.getvalue())
+
+
+
+
 
