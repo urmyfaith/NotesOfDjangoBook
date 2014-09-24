@@ -77,3 +77,8 @@ urlpatterns += patterns('mysite.show_non_html_content',
     url(r'^chapter13/show_pdf_StringIO/$','show_pdf_StringIO'),
 )
 
+
+urlpatterns += patterns('mysite.cookie_view',
+    url(r'^chapter14/show_color/$','show_color'),
+    url(r'^chapter14/set_color/$','set_color'),
+)
