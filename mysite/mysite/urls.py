@@ -85,4 +85,5 @@ urlpatterns += patterns('mysite.cookie_view',
 
 urlpatterns += patterns('mysite.session_view',
     url(r'^chapter14/post_comment/$','post_comment'),
+    url(r'^chapter14/login/$','login'),
 )

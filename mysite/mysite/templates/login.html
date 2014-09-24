@@ -1,0 +1,21 @@
+<html>
+<head>
+    <title>login</title>
+</head>
+<body>
+    <h1>login</h1>
+    {% if errors %}
+        <ul>
+            {% for error in errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+	<form action="" method="post">
+		{% csrf_token %}
+		<p> username<input type="text" name= "username" value="{{ username }}"></p>
+		<p>password<input type="text" name="password" value="{{ password }}">
+		<input type="submit" value="Submit">
+ 	</form>
+</body>
+</html>

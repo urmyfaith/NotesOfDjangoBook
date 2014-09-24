@@ -168,3 +168,41 @@ b) get:显示form
 ![post_again.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/post_again.png)
 
 ![table_django_session.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/table_django_session.png)
+
+
+---
+### 设置测试是否允许Cookies
+
+在访问网页时(get),尝试设置cookie,
+
+在登录的时候(post),判断设置cookie是否正常.然后进行分支处理.
+
+```python
+def login(request):
+    errors=[]
+    if request.method == 'POST':
+        if not request.POST.get('username',''):
+            errors.append('Enter a username.')
+        if not request.POST.get('password',''):
+            errors.append('Enter a password.')
+        if not errors:
+            if request.session.test_cookie_worked():
+                request.session.delete_test_cookie()
+                return HttpResponse("Logged in.")
+            else:
+                return HttpResponse('Please enable coookie.')
+    request.session.set_test_cookie()
+    return render_to_response('login.html',\
+                              {'errors':errors,}, \
+                              context_instance=RequestContext(request))
+```
+1)判断是否允许设置cooke:
+> request.session.test_cookie_worked()
+
+2)删除测试cookie:
+> request.session.delete_test_cookie()
+
+3)请求的时候设置cookie(正常访问网页时判断)
+> request.session.set_test_cookie()
+
+![set_test_cookie.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/set_test_cookie.png)

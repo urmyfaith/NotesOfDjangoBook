@@ -23,3 +23,21 @@ def post_comment(request):
                               {'errors':errors,}, \
                               context_instance=RequestContext(request))
 
+def login(request):
+    errors=[]
+    if request.method == 'POST':
+        if not request.POST.get('username',''):
+            errors.append('Enter a username.')
+        if not request.POST.get('password',''):
+            errors.append('Enter a password.')
+        if not errors:
+            if request.session.test_cookie_worked():
+                request.session.delete_test_cookie()
+                return HttpResponse("Logged in.")
+            else:
+                return HttpResponse('Please enable coookie.')
+    request.session.set_test_cookie()
+    return render_to_response('login.html',\
+                              {'errors':errors,}, \
+                              context_instance=RequestContext(request))
+  
