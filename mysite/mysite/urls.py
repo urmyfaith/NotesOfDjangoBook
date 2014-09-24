@@ -82,3 +82,7 @@ urlpatterns += patterns('mysite.cookie_view',
     url(r'^chapter14/show_color/$','show_color'),
     url(r'^chapter14/set_color/$','set_color'),
 )
+
+urlpatterns += patterns('mysite.session_view',
+    url(r'^chapter14/post_comment/$','post_comment'),
+)

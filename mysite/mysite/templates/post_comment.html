@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>post comment</title>
+</head>
+<body>
+    <h1>post comment</h1>
+    {% if errors %}
+        <ul>
+            {% for error in errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+	<form action="" method="post">
+		{% csrf_token %}
+		<p> Subject:<input type="text" name= "subject" value="{{ subject }}"></p>
+		<p>Your e-mail(optional):<input type="text" name="email" value="{{ email }}">
+		<p>message:<textarea name ="message" rows="10" cols="50">{{ message }}</textarea><p>
+		<input type="submit" value="Submit">
+ 	</form>
+</body>
+</html>
