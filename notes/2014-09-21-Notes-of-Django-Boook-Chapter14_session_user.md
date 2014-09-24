@@ -262,3 +262,108 @@ if request.user.is_authenticated():
 else:
     # Do something for anonymous users.
 ```
+
+##  使用User对象
+
+```python
+# 设置用户组
+myuser.groups = group_list
+
+# 给用户添加组
+myuser.groups.add(group1, group2,...)
+
+# 把用户从组里移除
+myuser.groups.remove(group1, group2,...)
+
+# 把用户从所有组里移除
+myuser.groups.clear()
+
+# 用户的权限相关
+myuser.permissions = permission_list
+myuser.permissions.add(permission1, permission2, ...)
+myuser.permissions.remove(permission1, permission2, ...)
+myuser.permissions.clear()
+```
+-----
+
+## 登录和退出
+
+自己编写login和logout的话:
+```python
+#mysite/urls.py
+urlpatterns += patterns('mysite.user_login_logout_view',
+    url(r'^chapter14/user/login/$','login'),
+    url(r'^chapter14/user/logout/$','logout'),                  
+)
+#mysite/user_login_logout_view.py
+from django.contrib import auth
+
+def login(request):
+    errors=[]
+    if request.method == 'POST':
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        if not request.POST.get('username',''):
+            errors.append('Enter a username.')
+        if not request.POST.get('password',''):
+            errors.append('Enter a password.')
+        if not errors:
+            user = auth.authenticate(username=username,password=password)
+            if user is not None and user.is_active:
+                auth.login(request,user)
+                return HttpResponse('You have logged in.')
+            else:
+                return HttpResponse('usrname or password invalid.')
+    return render_to_response('user_login.html',\
+                              {'errors':errors,}, \
+                              context_instance=RequestContext(request))  
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect("/chapter14/user/login/")
+#mysite/templates/user_login.html
+<html>
+<head>
+    <title>login</title>
+</head>
+<body>
+    <h1>login</h1>
+    {% if errors %}
+        <ul>
+            {% for error in errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+	<form action="" method="post">
+		{% csrf_token %}
+		<p> username<input type="text" name= "username" value="{{ username }}"></p>
+		<p>password<input type="password" name="password" value="{{ password }}">
+		<input type="submit" value="Submit">
+ 	</form>
+</body>
+</html>
+```
+
+上面自己实现的过程中:
+1> 在URLconf里设置了2个url
+
+2> 在视图里编写了两个函数来处理登录和登出
+
+登录分以下几个步骤:
+
+a) 获取用户名和密码
+>username = request.POST.get('username', '')
+
+b) 进行授权验证
+>auth.authenticate(username=username,password=password)
+
+c) 授权成功,则通过session保存用户状态等信息
+> auth.login(request,user)
+
+d) 处理登录后才能做的事项.
+
+3> 在模版里 ,简单的写了一个表单.
+
+![user_login_logout.gif ](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/user_login_logout.gif)
+
+---

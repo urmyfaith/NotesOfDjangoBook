@@ -87,3 +87,7 @@ urlpatterns += patterns('mysite.session_view',
     url(r'^chapter14/post_comment/$','post_comment'),
     url(r'^chapter14/login/$','login'),
 )
+urlpatterns += patterns('mysite.user_login_logout_view',
+    url(r'^chapter14/user/login/$','login'),
+    url(r'^chapter14/user/logout/$','logout'),                  
+)
