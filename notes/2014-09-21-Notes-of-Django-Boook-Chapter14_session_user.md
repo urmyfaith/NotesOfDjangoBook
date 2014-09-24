@@ -233,3 +233,32 @@ True
 
 
 ```
+---
+
+## Users and Authentication
+
+Django 认证/授权 系统会包含以下的部分：
+
+>用户 : 在网站注册的人
+
+>权限 : 用于标识用户是否可以执行某种操作的二进制(yes/no)标志
+
+>组 :一种可以将标记和权限应用于多个用户的常用方法
+
+>Messages : 向用户显示队列式的系统消息的常用方法
+
+## 打开认证支持
+
+1> 需要确认用户使用cookie，这样sesson 框架才能正常使用。1
+
+2>将 'django.contrib.auth' 放在你的 INSTALLED_APPS 设置中，然后运行 manage.py syncdb以创建对应的数据库表。
+
+3>确认 SessionMiddleware 后面的 MIDDLEWARE_CLASSES 设置中包含 'django.contrib.auth.middleware.AuthenticationMiddleware' SessionMiddleware
+
+### 判断用户是否登录
+```python
+if request.user.is_authenticated():
+    # Do something for authenticated users.
+else:
+    # Do something for anonymous users.
+```
