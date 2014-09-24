@@ -286,7 +286,7 @@ myuser.permissions.clear()
 ```
 -----
 
-## 登录和退出
+## 登录和退出--自己编写login,logout的视图
 
 自己编写login和logout的话:
 ```python
@@ -367,3 +367,65 @@ d) 处理登录后才能做的事项.
 ![user_login_logout.gif ](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/user_login_logout.gif)
 
 ---
+##登录和退出--使用系统视图
+```python
+#mysite/urls.py
+from django.contrib.auth.views import login,logout
+urlpatterns += patterns('',
+    url(r'^chapter14/accounts/login/$',login,{'extra_context': {'next': '/hello'}}),
+    url(r'^chapter14/accounts/logout/$',logout),                  
+)
+#mysite/templates/registration/login.html
+<html>
+<head>
+    <title>login</title>
+</head>
+<body>
+    <h1>login</h1>
+{% block content %}
+
+  {% if form.errors %}
+    <p class="error">Sorry, that is not a valid username or password</p>
+  {% endif %}
+
+  <form action="" method="post">
+	{% csrf_token %}
+    <label for="username">User name:</label>
+    <input type="text" name="username" value="" id="username">
+    <label for="password">Password:</label>
+    <input type="password" name="password" value="" id="password">
+
+    <input type="submit" value="login" />
+    <input type="hidden" name="next" value="{{ next|escape }}" />
+  </form>
+
+{% endblock %}
+</body>
+</html>
+
+```
+1)在上面,我们并没有自己编写login,logout视图,而是
+
+通过导入包的形式,使用系统自带的视图.
+
+注意:
+> 这里我们给login添加了额外的内容
+
+> {'extra_context': {'next': '/hello'}}
+
+> 与表单的中的next数据对应.(表单中next从这里获得.)
+
+2) 表单的路径是"mysite/templates/registration/login.html",需要自己编写login的模版
+
+a)模版中需要使用{% csrf_token %}
+
+b)有个hidden的next字段
+
+3)默认的登陆后跳转是"/accounts/profile ",使用next字段重写.这里,我们跳转到hello
+
+![user_import_login_logout.gif ](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/user_import_login_logout.gif)
+
+---
+
+
+

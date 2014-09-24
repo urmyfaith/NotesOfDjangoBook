@@ -91,3 +91,9 @@ urlpatterns += patterns('mysite.user_login_logout_view',
     url(r'^chapter14/user/login/$','login'),
     url(r'^chapter14/user/logout/$','logout'),                  
 )
+
+from django.contrib.auth.views import login,logout
+urlpatterns += patterns('',
+    url(r'^chapter14/accounts/login/$',login,{'extra_context': {'next': '/hello'}}),
+    url(r'^chapter14/accounts/logout/$',logout),                  
+)
