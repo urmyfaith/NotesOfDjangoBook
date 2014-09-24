@@ -206,3 +206,30 @@ def login(request):
 > request.session.set_test_cookie()
 
 ![set_test_cookie.png](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/set_test_cookie.png)
+
+---
+## 在视图(View)外使用Session
+
+1)需要导入包: from django.contrib.sessions.models import Session
+
+2) 常见的函数/属性:exprire_data,session_data,get_decoded()
+
+```python
+D:\Documents\GitHub\NotesOfDjangoBook\mysite>python manage.py shell
+>>> from django.contrib.sessions.models import Session
+>>> s= Session.objects.get(pk='vyrd47zvgrj2ot7z7lguekw1d42n0isl')
+>>> s.expire_date
+datetime.datetime(2014, 10, 5, 5, 49, 6, 915000, tzinfo=<UTC>)
+>>> s.session_data
+u'ODNiOGJmNmVkN2NjMjA5ODhhN2M1NmViNjU1N2E2ZDlhNGQ4Yzc5Yjp7fQ=='
+>>> s.session_key
+u'vyrd47zvgrj2ot7z7lguekw1d42n0isl'
+>>> s.get_decoded()
+{u'has_commented': True, u'testcookie': u'worked'}
+>>> cookies=s.get_decoded()
+>>> cookies['has_commented']
+True
+>>>
+
+
+```
