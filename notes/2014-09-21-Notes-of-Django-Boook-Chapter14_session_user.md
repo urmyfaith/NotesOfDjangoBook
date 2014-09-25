@@ -504,4 +504,37 @@ def vote_view2(request):
 
 ----
 
+### 限制用户访问的三个修饰符:login_required,user_passes_test,permission_required
+
+在源码文件
+```python
+C:\Python27\Lib\site-packages\Django-1.7-py2.7.egg\django\contrib\auth\decorators.py
+```
+中,可以看到这三个修饰符的具体实现.
+
+总结下功能:
+
+* login_required, 只是用户判断用户是否已经登录.
+
+* user_passes_test,可以对用户进行各种判断:
+ * 是否登录认证
+ * 是否具有某个权限
+ * 是否在某个组...
+ * 等等
+
+* permission_required,可以用来对判断用户是否具有某个权限,例如:
+
+
+```python
+from django.contrib.auth.decorators import permission_required
+
+@permission_required('polls.can_vote', login_url="/login/")
+def vote(request):
+    # do vote here.
+```
+上面的代码,判断用户是否具体有权限"'polls.can_vote".
+
+----
+
+
 
