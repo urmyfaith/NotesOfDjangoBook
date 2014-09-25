@@ -618,7 +618,7 @@ def register(request):
 3) 编写模版,显示表单
 
 注意:表单里,需要{% csrf_token %}.
-
+![register ](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/register.gif)
 ----
 
 
