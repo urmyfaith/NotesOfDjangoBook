@@ -45,3 +45,10 @@ def poll_view(request):
     return HttpResponse("you are in poll_view")
     
     
+def user_can_vote(user):
+    #return user.is_authenticated() and user.has_perm("poll.can_vote")
+    return user.is_authenticated()
+from django.contrib.auth.decorators import user_passes_test
+@user_passes_test(user_can_vote,login_url="/chapter14/user/login/")
+def vote_view2(request):
+    return HttpResponse("vote_view2 under user_passes_test.")

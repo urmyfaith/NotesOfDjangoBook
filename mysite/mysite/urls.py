@@ -92,6 +92,7 @@ urlpatterns += patterns('mysite.user_login_logout_view',
     url(r'^chapter14/user/logout/$','logout'),
     url(r'^chapter14/limited_acess_vote/$','vote_view'),
     url(r'^chapter14/limited_acess_poll/$','poll_view'),
+    url(r'^chapter14/limited_acess_vote2/$','vote_view2'),
 )
 
 from django.contrib.auth.views import login,logout

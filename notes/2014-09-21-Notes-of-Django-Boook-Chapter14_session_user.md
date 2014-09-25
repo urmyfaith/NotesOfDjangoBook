@@ -427,7 +427,7 @@ b)有个hidden的next字段
 
 ---
 
-## 在某一个页面中,判断用户是否已经认证登录.
+## 在某一个页面中,判断用户是否已经认证登录--->login_required
 
 第一种方法是,使用 request.user.is_authenticated().
 
@@ -473,3 +473,35 @@ login_required中,如果认证失败,默认跳转到登录页面,
 可以通过login_url参数指定.
 
 ---
+
+## 对已经登录用户,进一步限制访问---->user_passes_test
+
+可以通过检查用户是否具有某个权限,进一步限制用户访问:
+```python
+#urls.py
+urlpatterns += patterns('mysite.user_login_logout_view',
+    ...
+    url(r'^chapter14/limited_acess_vote2/$','vote_view2'),
+)
+#user_login_logout_view.py
+from django.contrib.auth.decorators import user_passes_test
+def user_can_vote(user):
+    #return user.is_authenticated() and user.has_perm("poll.can_vote")
+    return user.is_authenticated()
+@user_passes_test(user_can_vote,login_url="/chapter14/user/login/")
+def vote_view2(request):
+    return HttpResponse("vote_view2 under user_passes_test.")
+```
+访问"chapter14/limited_acess_vote2/"的时候,使用视图"vote_view2"
+
+但是,在视图上面,我们使用了修饰符@user_passes_test()
+
+这个函数需要一个回调函数,可选的登录url.
+
+这样以后,如果访问视图的时候,用户没有通过测试(这里我们测试是user_can_vote(),里面判断用户是否登录,当然,可以判断用户是否具有某某权限,是否在某个组里,等等.),那么跳转到登录界面.
+
+![user_passes_test.gif ](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/user_passes_test.gif)
+
+----
+
+
