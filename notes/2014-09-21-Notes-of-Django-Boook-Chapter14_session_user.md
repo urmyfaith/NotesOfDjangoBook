@@ -551,4 +551,25 @@ def limited_object_detail(*args, **kwargs):
 ```
 ----
 
+## 管理 Users, Permissions 和 Groups
+
+### 创建用户
+
+```python
+>>> from django.contrib.auth.models import User
+>>> user = User.objects.create_user(username="faith",email='apple@qq.com',password='faith')
+>>> user.is_staff = True
+>>> user.save()
+>>>
+```
+### 修改密码
+```python
+>>> user = User.objects.get(username='faith')
+>>> user.set_password('faith')
+>>> user.save()
+>>>
+```
+---
+
+
 
