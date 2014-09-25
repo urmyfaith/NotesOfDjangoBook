@@ -66,3 +66,8 @@ def register(request):
     return render_to_response("registration/register.html", \
                               {'form':form}, \
                               context_instance=RequestContext(request))
+
+def user_data_in_templates(request):
+    return render_to_response("use_data_in_templates.html",context_instance=RequestContext(request))
+    
+    

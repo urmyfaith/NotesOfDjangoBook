@@ -621,6 +621,36 @@ def register(request):
 ![register ](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/register.gif)
 ----
 
+## 在模版中使用认证数据.
+
+> 当前登入的用户以及他（她）的权限可以通过 RequestContext 在模板的context中使用
+
+```python
+#urls.py
+    url(r'^chapter14/user/user_data$','user_data_in_templates'),
+
+#user_login_logout_view.py
+def user_data_in_templates(request):
+    return render_to_response("use_data_in_templates.html", \ 
+context_instance=RequestContext(request))
+ 
+#mysite/templates/use_data_in_templates.html
+{% if user.is_authenticated %}
+  <p>Welcome, <b>{{ user.username }}</b>.Thanks for logging in.</p>
+{% else %}
+  <p>Welcome, new user. Please log in.</p>
+{% endif %}
+```
+注意:
+
+1) 在view中,需要使用RequestContext
+
+2) 在模版中,可以使用user对象,以及对象的各种方法/属性等.
+
+![use_data_in_templates.gif ](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/use_data_in_templates.gif)
+
+---
+
 
 
 
