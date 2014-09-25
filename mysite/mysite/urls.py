@@ -89,11 +89,13 @@ urlpatterns += patterns('mysite.session_view',
 )
 urlpatterns += patterns('mysite.user_login_logout_view',
     url(r'^chapter14/user/login/$','login'),
-    url(r'^chapter14/user/logout/$','logout'),                  
+    url(r'^chapter14/user/logout/$','logout'),
+    url(r'^chapter14/limited_acess_vote/$','vote_view'),
+    url(r'^chapter14/limited_acess_poll/$','poll_view'),
 )
 
 from django.contrib.auth.views import login,logout
 urlpatterns += patterns('',
     url(r'^chapter14/accounts/login/$',login,{'extra_context': {'next': '/hello'}}),
-    url(r'^chapter14/accounts/logout/$',logout),                  
+    url(r'^chapter14/accounts/logout/$',logout),  
 )

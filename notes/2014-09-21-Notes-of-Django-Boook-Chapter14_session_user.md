@@ -427,5 +427,49 @@ b)有个hidden的next字段
 
 ---
 
+## 在某一个页面中,判断用户是否已经认证登录.
 
+第一种方法是,使用 request.user.is_authenticated().
 
+```python
+def login(request):
+    ...
+            if user is not None and user.is_active:
+                auth.login(request,user)
+                #return HttpResponse('You have logged in.')
+                return HttpResponseRedirect('/chapter14/limited_acess_vote/')
+            else:
+                return HttpResponse('usrname or password invalid.')
+    return render_to_response('user_login.html',\
+                              {'errors':errors,}, \
+                              context_instance=RequestContext(request))
+
+def vote_view(request):
+    if not request.user.is_authenticated():
+        return HttpResponse("not authenticated.")
+    else:
+        return HttpResponse("yes authenticated.")
+```
+在登录后,跳转到vote_view视图,
+
+如果用户已经认证,或者用户没有认证.
+
+第二种方法是,使用auth包里的"login_required"修饰符.
+```python
+from django.contrib.auth.decorators import login_required
+@login_required(login_url="/chapter14/user/login/")
+#function under login_required, will be authenticate.
+# if authentication failed,will return to login_url.
+def poll_view(request):
+    return HttpResponse("you are in poll_view")
+```
+
+定义的类poll_view在
+>@login_required(login_url="/chapter14/user/login/")
+之后,这样,在这句之后的所有视图都会使用login_required来认证.
+
+login_required中,如果认证失败,默认跳转到登录页面,
+
+可以通过login_url参数指定.
+
+---
