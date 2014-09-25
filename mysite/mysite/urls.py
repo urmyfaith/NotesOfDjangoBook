@@ -94,11 +94,15 @@ urlpatterns += patterns('mysite.user_login_logout_view',
     url(r'^chapter14/limited_acess_poll/$','poll_view'),
     url(r'^chapter14/limited_acess_vote2/$','vote_view2'),
     url(r'^chapter14/user/register$','register'),
-    url(r'^chapter14/user/user_data$','user_data_in_templates'),
+    url(r'^chapter14/user/user_data$','user_data_in_templates'), 
 )
 
 from django.contrib.auth.views import login,logout
 urlpatterns += patterns('',
     url(r'^chapter14/accounts/login/$',login,{'extra_context': {'next': '/hello'}}),
     url(r'^chapter14/accounts/logout/$',logout),  
+)
+
+urlpatterns += patterns('mysite.user_message_view',
+    url(r'^chapter14/message/playlist/(?P<songs>[\w-]+)/$','create_palylist'),
 )

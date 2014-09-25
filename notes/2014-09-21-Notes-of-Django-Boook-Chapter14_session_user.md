@@ -650,7 +650,64 @@ context_instance=RequestContext(request))
 ![use_data_in_templates.gif ](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/use_data_in_templates.gif)
 
 ---
+## 权限,组和消息--->messages.add_message()
+
+> 消息系统会为给定的用户接收消息。 每个消息都和一个 User 相关联。
+
+接收和显示消息的方法:
+
+> 要创建一条新的消息，使用 user.message_set.create(message='message_text') 
+
+> 要获得/删除消息，使用 user.get_and_delete_messages() ，
+
+> 这会返回一个 Message 对象的列表，并且从队列中删除返回的项。
+
+```python
+#urls.py
+urlpatterns += patterns('mysite.user_message_view',
+    url(r'^chapter14/message/playlist/(?P<songs>[\w-]+)/$','create_palylist'),
+)
+#user_message_view.py
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from django.contrib import messages
+def create_palylist(request,songs):
+    # creat playlist here.
+    #request.user.message_set.create(message="Your playlist was added successfully.")
+    messages.add_message(request, messages.INFO, 'Your playlist was added successfully') 
+    return render_to_response("user_message.html", \
+                              {"songs":songs}, \
+                              context_instance=RequestContext(request))
+#mysite/tempaltes/user_message.html
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+		<li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<p>Your palylist : <strong>{{ songs }}</strong> has been created.
+```
+
+1) URLcof里接收参数songs
+
+2) 视图里,使用messages.add_message()方法来创建一条消息.
+
+需要导入包from django.contrib import messages
 
 
+3) 在模版里
 
+ * 使用RequestContext
+ * 传递songs参数供模版使用,**但是不显式提供messages给模版!**
+ * 模版里使用for循环来遍历
+
+4) **使用messages框架,不需要用户登录.**
+
+5) request.user.message_set.creat()方法已经过时.
+
+![show_user_message.gif ](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/notes/images/show_user_message.gif)
+
+---
 
