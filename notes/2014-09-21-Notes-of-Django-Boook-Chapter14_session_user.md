@@ -1,5 +1,46 @@
 # Chapter 14 session_user
 
+* Chapter 14 session_user
+* 存、取cookie
+* 打开Sessions功能
+* 在View(视图)中使用Session
+* 设置session值
+* 读取session值
+* 删除某个session值
+* 判断是否存在某个session值
+*  简单（但不很安全）的、防止多次评论方法
+* 设置测试是否允许Cookies
+* 在视图(View)外使用Session
+
+---
+
+* Users and Authentication
+* 打开认证支持
+* 判断用户是否登录
+*  使用User对象
+* 设置用户组
+* 给用户添加组
+* 把用户从组里移除
+* 把用户从所有组里移除
+* 用户的权限相关
+* 登录和退出--自己编写login,logout的视图
+*登录和退出--使用系统视图
+* 在某一个页面中,判断用户是否已经认证登录--->login_required
+* 对已经登录用户,进一步限制访问---->user_passes_test
+* 限制用户访问的三个修饰符:login_required,user_passes_test,permission_required
+* 限制通用视图的访问-->重新包装视图函数
+
+---
+
+* 管理 Users, Permissions 和 Groups
+* 创建用户-->User.objects.create_user()
+* 修改密码-->user.set_password('xx')
+* 用户注册-->
+* 在模版中使用认证数据.
+* 权限,组和消息--->messages.add_message()
+
+
+
 
 
 ##存、取cookie
