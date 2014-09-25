@@ -52,3 +52,17 @@ from django.contrib.auth.decorators import user_passes_test
 @user_passes_test(user_can_vote,login_url="/chapter14/user/login/")
 def vote_view2(request):
     return HttpResponse("vote_view2 under user_passes_test.")
+
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            return HttpResponseRedirect('/chapter14/user/login/')
+    else:
+        form = UserCreationForm()
+    return render_to_response("registration/register.html", \
+                              {'form':form}, \
+                              context_instance=RequestContext(request))

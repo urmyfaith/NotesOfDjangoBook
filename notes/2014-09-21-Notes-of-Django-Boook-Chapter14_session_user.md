@@ -517,7 +517,7 @@ C:\Python27\Lib\site-packages\Django-1.7-py2.7.egg\django\contrib\auth\decorator
 * login_required, 只是用户判断用户是否已经登录.
 
 * user_passes_test,可以对用户进行各种判断:
- * 是否登录认证
+ * 是否登录认证(**注意:user_passes_test不会自动检查 User是否认证**)
  * 是否具有某个权限
  * 是否在某个组...
  * 等等
@@ -553,7 +553,7 @@ def limited_object_detail(*args, **kwargs):
 
 ## 管理 Users, Permissions 和 Groups
 
-### 创建用户
+### 创建用户-->User.objects.create_user()
 
 ```python
 >>> from django.contrib.auth.models import User
@@ -562,7 +562,7 @@ def limited_object_detail(*args, **kwargs):
 >>> user.save()
 >>>
 ```
-### 修改密码
+### 修改密码-->user.set_password('xx')
 ```python
 >>> user = User.objects.get(username='faith')
 >>> user.set_password('faith')
@@ -570,6 +570,57 @@ def limited_object_detail(*args, **kwargs):
 >>>
 ```
 ---
+
+### 用户注册-->
+```python
+#urls.py
+
+urlpatterns += patterns('mysite.user_login_logout_view',
+    ...
+    url(r'^chapter14/user/register$','register'),
+)
+
+#mysite/user_login_logout_view.py
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            return HttpResponseRedirect('/chapter14/user/login/')
+    else:
+        form = UserCreationForm()
+    return render_to_response("registration/register.html", \
+                              {'form':form}, \
+                              context_instance=RequestContext(request))
+#mysite/templates/registration/register.html
+{% block content %}
+  <h1>Create an account</h1>
+
+  <form action="" method="post">
+	{% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Create the account">
+  </form>
+{% endblock %}
+
+```
+1) 在urls.py里,指定URLconf
+
+2) 在view里register():
+
+ * GET:显示表单
+ * POST:根据提交值检查表单,如果有效,创建用户,返回登录界面.
+
+注意:还是需要使用"RequestContext"
+
+3) 编写模版,显示表单
+
+注意:表单里,需要{% csrf_token %}.
+
+----
+
 
 
 
