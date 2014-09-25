@@ -537,4 +537,18 @@ def vote(request):
 ----
 
 
+## 限制通用视图的访问-->重新包装视图函数
+
+如何限制通用视图的访问呢?
+可以使用上面的login_required,**重新包装视图函数**:
+
+```python
+from django.contrib.auth.decorators import login_required
+from django.views.generic.date_based import object_detail
+@login_required
+def limited_object_detail(*args, **kwargs):
+    return object_detail(*args, **kwargs)
+```
+----
+
 
