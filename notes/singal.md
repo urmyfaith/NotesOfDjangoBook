@@ -191,5 +191,3 @@ class PizzaStore(object):
 ```python
 request_finished.connect(my_callback, dispatch_uid="my_unique_identifier")
 ```
-
-
