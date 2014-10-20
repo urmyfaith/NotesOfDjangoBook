@@ -60,5 +60,6 @@ git push -u origin
 
 参考：
 
-* http://casparzhang.blog.163.com/blog/static/12662655820140705139542/
+* [http://casparzhang.blog.163.com/blog/static/12662655820140705139542/](git安装和简单使用 "")
 
+* [git总结](https://raw.githubusercontent.com/urmyfaith/NotesOfDjangoBook/master/Git%E7%AE%80%E6%98%8E%E6%89%8B%E5%86%8C.pdf "") 
