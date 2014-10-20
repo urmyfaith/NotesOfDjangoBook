@@ -54,6 +54,29 @@ git push -u origin
 
 ```
 
+* 提交时候密码的问题：
+
+如果不想每次提交都输入密码，可以更改“.git/config"文件中的url值格式为：
+```
+ url = git@github.com:[user_name]/[project_name].git
+```
+
+```bat
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+	hideDotFiles = dotGitOnly
+[remote "origin"]
+	url = git@github.com:urmyfaith/NotesOfDjangoBook.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+```
 
 
 ----
