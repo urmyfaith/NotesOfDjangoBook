@@ -79,6 +79,34 @@ git push -u origin
 ```
 
 
+## vim编码设置
+vimrc文件位置：
+添加如下设置
+```
+set nocompatible
+set number
+filetype on
+set history=1000
+set background=dark
+syntax on
+set autoindent
+set smartindent
+set tabstop=4
+set shiftwidth=4
+set showmatch
+set guioptions-=T
+set vb t_vb=
+set ruler
+set nohls
+set incsearch
+if has("vms")
+set nobackup
+else
+set backup
+endif
+set fileencodings=utf-8,gbk
+```
+
 ----
 
 参考：
