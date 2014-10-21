@@ -86,6 +86,7 @@ git push -u origin
 
 
 ## vim编码设置
+(显示中文乱码问题，最后一行解决）
 vimrc文件位置：
 添加如下设置
 ```
@@ -112,6 +113,17 @@ set backup
 endif
 set fileencodings=utf-8,gbk
 ```
+
+## git ls显示中文乱码问题
+编辑
+```
+C:\Program Files\Git\etc\git-completion.bash
+```
+添加：
+```
+alias ls="ls --show-control-chars"
+```
+
 
 ----
 
