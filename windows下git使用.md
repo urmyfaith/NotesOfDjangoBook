@@ -15,21 +15,27 @@ a)登陆https://github.com/settings/ssh
 
 b）Add an SSH Key
 
-3）测试是否可以登录github使用
+3）测试是否可以登录github使用，添加用户名和邮箱
 ```bat
-	ssh -T git@github.com
+$ ssh -T git@github.com
+$ git config --global user.email "urmyfaith@qq.com"
+
+$ git config --global user.name "urmyfaith"
+
 ```
 
 
 4）本地git初始化
 ```bat
-    git init  
+$    git init  
 ```
 
     
 5） 拉取服务器项目
 ```bat
- git pull  https://github.com/urmyfaith/NotesOfDjangoBook.git 
+$ git pull  https://github.com/urmyfaith/NotesOfDjangoBook.git 
+或者
+$ git pull git@github.com:urmyfaith/NotesOfDjangoBook.git
 ```
 
   
@@ -49,7 +55,7 @@ git commit -m "notes_here"
 git remote add origin https://github.com/urmyfaith/NotesOfDjangoBook
 # also:
 # git remote add origin https://github.com/urmyfaith/NotesOfDjangoBook.git
-
+# git remote add origin git@github.com:urmyfaith/NotesOfDjangoBook.git
 git push -u origin
 
 ```
